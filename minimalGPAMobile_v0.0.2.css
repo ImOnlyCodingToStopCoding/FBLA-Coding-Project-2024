@@ -1,1 +1,356 @@
 
+* {
+    font-family: "Lexend Deca", sans-serif;
+}
+
+body {
+    height: auto;
+    width: 90%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 25px;
+}
+
+h3 {
+    text-align: center;
+    font-size: 18px;
+}
+
+.courseInput {
+    height: 2.7rem;
+    width: 225%;
+    margin-right: 0px; 
+    
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #555;
+    font-size: 17px;
+    margin-bottom: 12px;
+    background-color: white;
+}
+
+label {
+    text-align: center;
+    font-size: 20px;
+}
+
+.semesterLabel {
+    text-align: center;
+    font-size: 18px;
+    color: #000000;
+    width: 45%;
+    height: 2.2rem; 
+    border: 1px solid #555;
+    margin-right: 0px;
+}
+
+.semesterLabelElements {
+    display: flex;
+    justify-content: center;
+    width: 140%;
+}
+
+.classGrade select {
+    height: 3.3rem;
+    width: 171%;
+    padding: 2px 8px;
+    margin-right: 25px; */
+    margin-left: 0px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 17px; 
+    background-color: transparent;
+    color: black;
+}
+
+.classType select {
+    height: 3.3rem;
+    width: 200%;
+    margin-left: 31px;
+    margin-right: 5px;
+    padding: 0px 0px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    font-size: 17px; 
+    text-align: center;
+     background-color: transparent;
+    color: black;
+}
+
+
+.courseContainer {
+    display: flex;
+    width: 110%;
+    gap: 5px;
+    justify-content: center;
+}
+
+.branding {
+    text-align: center;
+    line-height: 0em;
+}
+
+.newCourse {
+    background-color: #0cb97a;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    height: 2.8rem;
+    width: 40%;
+}
+
+
+
+.addElements {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.newSemester {
+    background-color: rgb(4, 130, 170);
+    border: none;
+    color: white;
+    padding: 10px 21px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    height: 2.8rem;
+    width: 40%;
+}
+
+
+
+#calculateGPAButton {
+    background-color: #dc6512;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    height: 2.8rem;
+    width: 40%;
+}
+
+
+.bottomButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#calculateElements {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.deleteCourse {
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    color: gray;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 36px;
+    height: 1px;
+    width: 1px;
+    margin-left: 39px;
+}
+
+.deleteSemester {
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    color: gray;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 36px;
+    height: 1px;
+    width: 1px;
+    margin-left: 15px;
+	 margin-top: 15px;
+    transform: translate(-55%,-1650%);
+}
+
+
+.titleandHelp {
+    display: flex;
+    justify-content: center;
+}
+
+#infoButton {
+    width: 100px;
+    height: 100px;
+    border: none;
+    background-color: rgba(255, 0, 0, 0);
+}
+
+#bottomTextElements {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 0px;
+    right: 14px;
+}
+
+hr {
+    border: none;
+    height: 3px;
+    background-color: #333;
+}
+
+.resultsModal {
+    width: 100%;
+    height: 102%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.resultsModalContent {
+    z-index: 1000;
+    width: 85%;
+    height: 65%;
+    background-color: #ffffff;
+    line-height: 2em;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+table,
+tr,
+th,
+td,
+caption {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 0.4rem;
+    text-align: center;
+    font-size: 16px;
+}
+
+table {
+    width: 100%;
+    line-height: 1em;
+}
+
+.semesterGPALabel {
+    line-height: 0em;
+    text-align: center;
+}
+
+.closeModal {
+    position: absolute;
+    top: 20px;
+    right: 19px;
+    font-weight: 900;
+    font-family: serif;
+    font-size: 63px;
+    cursor: default;
+    transform: rotate(45deg);
+}
+
+.infoModal {
+    width: 100%;
+    height: 102%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.infoModalContent {
+    z-index: 1000;
+    width: 80%;
+    height: 65%;
+    background-color: #ffffff;
+    line-height: 2em;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.highlightedCourse {
+    border: 2px solid red;
+}
+
+.infoModalContent ul {
+    width: 95%;
+    height: 20%;
+    margin: 0rem;
+    padding: 0;
+    list-style-type: none;
+}
+
+.infoModalContent ul li {
+    font-size: 33px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.infoModalContent .infoQuestion {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #303030;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.infoModalContent .infoAnswer {
+    display: none;
+    background-color: #303030;
+    color: #ffffff;
+    overflow: hidden;
+    font-size: 25px;
+    margin-top: 2px;
+    padding: 10px;
+    margin-left: 0px;
+    border-radius: 10px;
+}
+.infoAnswer ol li {
+    font-size: 25px;
+}
+
+.infoModalContent .infoQuestion.open + .infoAnswer {
+    display: flex;
+}
+
+
+a {
+    color: inherit;
+}
+
