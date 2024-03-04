@@ -1,1 +1,483 @@
+* {
+    font-family: "Lexend Deca", sans-serif;
+}
+
+body {
+    height: auto;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+h3 {
+    text-align: center;
+    font-size: 18px;
+}
+
+.courseInput {
+    height: 3.24rem;
+    width: 25%;
+    padding-left: 10px;
+    text-decoration: none;
+    border-top: 1px solid #b6b6b6;
+    border-top-left-radius: 0.25rem;
+    border-bottom: 1px solid #b6b6b6;
+    border-bottom-left-radius: 0.25rem;
+    border-left: 1px solid #b6b6b6;
+    border-right: 1px solid #b6b6b6;
+    font-size: 22px;
+    margin-bottom: 0px;
+    background-color: white;
+    color: black;
+    
+}
+
+input[type="text"]:focus {
+    border: 2px solid #000000;
+}
+
+label {
+    text-align: center;
+    font-size: 20px;
+}
+
+.semesterLabel {
+    display: flex;
+    text-align: center;
+    font-size: 22px;
+    color: #000000;
+    font-weight: bold;
+    width: 20%;
+    height: 3.5rem;
+    border:1px solid #b6b6b6; 
+    background-color: white;
+}
+
+.semesterLabelElements {
+    gap: 1%;
+    display: flex;
+    justify-content: center;
+    transform: translateX(3%)
+}
+
+
+.classGrade select {
+    height: 3.5rem;
+    width: 100%;
+    padding: 16px 20px;
+    border-top: 1px solid #b6b6b6;
+    border-bottom: 1px solid #b6b6b6;
+    border-left: none;
+    border-right: none;
+    font-size: 22px;
+    color: black;
+    background-color: white;
+}
+
+.classType select {
+    height: 3.5rem;
+    width: 100%;
+    padding: 16px 20px;
+    border-top: 1px solid #b6b6b6;
+    border-top-right-radius: 0.25rem;
+    border-bottom: 1px solid #b6b6b6;
+    border-bottom-right-radius: 0.25rem;
+    border-right: 1px solid #b6b6b6;
+    border-left: 1px solid #b6b6b6;
+    font-size: 22px;
+    color: black;
+    background-color: white;
+}
+
+
+.courseNumberMarker {
+    font-size: 22px;  
+    transform: translate(-16px, 19px);
+    color: gray;     
+}
+
+select:focus {
+    border: 2px solid #000000;
+}
+
+.courseContainer {
+    display: flex;
+     justify-content: center;
+    width: 100%;
+   
+}
+
+.courseLabel {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    line-height: 0.1em; 
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: none;
+     padding-top: none;
+}
+
+.branding {
+    width: 100%;
+    position: relative;
+    display: flex;
+    gap: 10px;
+   
+}
+
+.logo {
+    display: inline-block;
+}
+
+.logoText {
+    width: 100%;
+    top: 50%;
+    transform: translateY(47%); 
+    font-size: 50px;
+    font-family: "Lexend Deca", sans-serif;
+    font-weight: 600;
+}
+
+.topLeftContent {
+    width: 100%;
+    right: 90px;
+    top: -29px;
+    display: flex;
+    position: relative; 
+    gap: 46px;
+    text-align: right; 
+}
+
+.contactUsText {
+    width: 100%;
+    top: 50%;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.helpText {
+    top: 50%;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+
+.newCourse {
+    background-color: #0cb97a;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    border-radius: 8px;
+    height: 3.5rem;
+    width: 200px;
+}
+
+.newCourse:hover {
+    background-color: #0a8759;
+}
+
+.addElements {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.newSemester {
+    background-color: rgb(4, 130, 170);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 23px;
+    border-radius: 8px;
+    height: 4rem;
+    width: 250px;
+}
+
+.newSemester:hover {
+    background-color: rgb(1, 94, 123);
+}
+
+#calculateGPAButton {
+    background-color: #dc6512;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 23px;
+    border-radius: 8px;
+    height: 4rem;
+    width: 250px;
+}
+
+#calculateGPAButton:hover {
+    background-color: #b35310;
+}
+
+.bottomButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#calculateElements {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.deleteSemester {
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    color: #919191;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    height: 1px;
+    width: 5%;
+    transform: translate(-44%,380%);
+}
+
+.deleteCourse {
+    background-color: rgba(255, 0, 0, 0);
+    border: none;
+    color: #919191;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    height: 1px;
+    width: 5%;
+    transform: translate(-20%,380%);
+}
+
+.deleteCourse:hover {
+    color: #e00000;
+}
+
+.deleteSemester:hover {
+     color: #e00000;
+}
+
+.titleandHelp {
+    display: flex;
+    justify-content: center;
+}
+
+#infoButton {
+    width: 70px;
+    height: 70px;
+    border: none;
+    background-color: rgba(255, 0, 0, 0);
+}
+
+#bottomTextElements {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 0px;
+    right: 14px;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: rgba(56, 56, 56, 0.25);
+}
+
+.resultsModal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.resultsModalContent {
+    z-index: 1000;
+    width: 60%;
+    height: 80%;
+    background-color: #ffffff;
+    line-height: 2em;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+table,
+tr,
+th,
+td,
+caption {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 0.4rem;
+    text-align: center;
+    font-size: 29px;
+}
+
+table {
+    width: 100%;
+    line-height: 1em;
+}
+
+.semesterGPALabel {
+    line-height: 0em;
+    text-align: center;
+}
+
+.closeModal {
+    position: absolute;
+    top: 3;
+    right: 14px;
+    font-weight: 900;
+    font-family: serif;
+    font-size: 53px;
+    cursor: default;
+    transform: rotate(45deg);
+}
+
+.infoModal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.infoModalContent {
+    z-index: 1000;
+    width: 60%;
+    height: 80%;
+    background-color: #ffffff;
+    line-height: 2em;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.highlightedCourse {
+    border: 3px solid red;
+}
+
+.infoModalContent ul {
+    width: 90%;
+    margin: 3rem auto;
+    padding: 0;
+    list-style-type: none;
+}
+
+.infoModalContent ul li {
+    font-size: 24px;
+    margin-bottom: 14px;
+    color: #ffffff;
+}
+
+.infoModalContent .infoQuestion {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #303030;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.infoModalContent .infoAnswer {
+    display: none;
+    background-color: #303030;
+    color: #ffffff;
+    overflow: hidden;
+    font-size: 20px;
+    margin-top: 2px;
+    padding: 10px;
+    margin-left: 0px;
+    border-radius: 10px;
+}
+.infoAnswer ol li {
+    font-size: 20px;
+}
+
+.infoModalContent .infoQuestion.open + .infoAnswer {
+    display: flex;
+}
+
+a {
+    color: inherit;
+}
+
+#currentVersionNumber {
+    position: relative;
+    bottom: 0px;
+    font-size: 20px;
+}
+
+
+.contactModal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.contactModalContent {
+    z-index: 1000;
+    width: 60%;
+    height: 80%;
+    background-color: #ffffff;
+    line-height: 2em;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
