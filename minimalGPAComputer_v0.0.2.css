@@ -64,10 +64,10 @@ label {
 }
 
 .semesterLabelElements {
-    gap: 1%;
+   /* gap: 1%; */
     display: flex;
     justify-content: center;
-    transform: translateX(3%)
+  /*  transform: translateX(3%) */
 }
 
 
@@ -87,6 +87,7 @@ label {
 .classType select {
     height: 3.5rem;
     width: 100%;
+
     padding: 16px 20px;
     border-top: 1px solid #b6b6b6;
     border-top-right-radius: 0.25rem;
@@ -112,9 +113,10 @@ select:focus {
 
 .courseContainer {
     display: flex;
-     justify-content: center;
+    position: relative;
+    justify-content: center;
     width: 100%;
-   
+    
 }
 
 .courseLabel {
@@ -259,11 +261,11 @@ select:focus {
     color: #919191;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline-block; 
     font-size: 30px;
     height: 1px;
-    width: 5%;
-    transform: translate(-44%,380%);
+    width: 0%;
+     transform: translate(10px, 8px);
 }
 
 .deleteCourse {
@@ -272,11 +274,11 @@ select:focus {
     color: #919191;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline-block; 
     font-size: 30px;
     height: 1px;
-    width: 5%;
-    transform: translate(-20%,380%);
+    width: 0%;
+    transform: translate(10px, 8px);
 }
 
 .deleteCourse:hover {
@@ -480,4 +482,3 @@ a {
     flex-direction: column;
     align-items: center;
 }
-
