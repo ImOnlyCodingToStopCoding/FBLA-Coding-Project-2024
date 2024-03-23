@@ -24,6 +24,12 @@ h3 {
     font-size: 18px;
 }
 
+h4 {
+   text-align: center;
+    font-size: 15px;  
+     font-weight: normal;
+ 
+}
 .courseInput {
     height: 3.24rem;
     width: 25%;
@@ -39,7 +45,7 @@ h3 {
     margin-bottom: 0px;
     background-color: white;
     color: black;
-    
+    z-index: 0;
 }
 
 input[type="text"]:focus {
@@ -61,13 +67,12 @@ label {
     height: 3.5rem;
     border:1px solid #b6b6b6; 
     background-color: white;
+    z-index: 0;
 }
 
 .semesterLabelElements {
-   /* gap: 1%; */
     display: flex;
     justify-content: center;
-  /*  transform: translateX(3%) */
 }
 
 
@@ -82,12 +87,12 @@ label {
     font-size: 22px;
     color: black;
     background-color: white;
+    z-index: 0;
 }
 
 .classType select {
     height: 3.5rem;
     width: 100%;
-
     padding: 16px 20px;
     border-top: 1px solid #b6b6b6;
     border-top-right-radius: 0.25rem;
@@ -98,6 +103,7 @@ label {
     font-size: 22px;
     color: black;
     background-color: white;
+    z-index: 0;
 }
 
 
@@ -108,7 +114,7 @@ label {
 }
 
 select:focus {
-    border: 2px solid #000000;
+    border: 3px solid #000000;
 }
 
 .courseContainer {
@@ -180,7 +186,6 @@ select:focus {
     font-weight: 500;
     cursor: pointer;
 }
-
 
 
 .newCourse {
@@ -324,6 +329,7 @@ hr {
     justify-content: center;
     align-items: center;
     display: none;
+    z-index: 1000;
 }
 
 .resultsModalContent {
@@ -372,6 +378,16 @@ table {
     transform: rotate(45deg);
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 .infoModal {
     width: 100%;
     height: 100%;
@@ -382,6 +398,7 @@ table {
     justify-content: center;
     align-items: center;
     display: none;
+    z-index: 1000;
 }
 
 .infoModalContent {
@@ -401,7 +418,7 @@ table {
 }
 
 .highlightedCourse {
-    border: 3px solid red;
+    border: 2px solid red;
 }
 
 .infoModalContent ul {
@@ -465,6 +482,7 @@ a {
     justify-content: center;
     align-items: center;
     display: none;
+    z-index: 1000;
 }
 
 .contactModalContent {
@@ -481,4 +499,73 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+.contactModalTextElements {
+    height: 3.24rem;
+    width: 550px;
+    padding-left: 10px;
+    text-decoration: none;
+    border: 1px solid #b6b6b6;
+    font-size: 22px;
+    margin-bottom: 0px;
+    background-color: white;
+    color: black;
+}
+
+
+.contactModalSelectElements {
+   height: 3.24rem;
+    width: 564px;
+    padding-left: 10px;
+    text-decoration: none;
+    border: 1px solid #b6b6b6;
+    font-size: 22px;
+    margin-bottom: 0px;
+    background-color: white;
+    color: black;
+}
+
+#contactModalMessage {
+    height: 32.05rem;
+    width: 550px;
+    padding-left: 10px;
+    text-decoration: none;
+    border: 1px solid #b6b6b6;
+    font-size: 22px;
+    margin-bottom: 0px;
+    background-color: white;
+    color: black;
+    
+}
+
+
+#openHelpMenuFromContact {
+  cursor: pointer;    
+}
+
+#sendEmailButton {
+    background-color: #dc6512;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 23px;
+    border-radius: 8px;
+    height: 3.8rem;
+    width: 250px;
+}
+
+#sendEmailButton:hover {
+    background-color: #b35310;
+}
+
+.hintContactText {
+   color: black; 
+ font-size: 18px;
+}
+    
 }
