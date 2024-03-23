@@ -8,7 +8,7 @@
             rel="stylesheet"
             media="screen and (min-width: 555px) and (max-width: 680px)"
             href="minimalGPAComputer(Minimized)_v0.0.2.css" />
-         <link
+        <link
             rel="stylesheet"
             media="screen and (min-width: 681px)"
             href="minimalGPAComputer_v0.0.2.css" />
@@ -21,7 +21,7 @@
     <body>
         <header class="header">
             <div class="branding">
-                <div class="logo">
+                <div class="logo noselect">
                     <a href="index.html">
                         <img
                             src="FunApplets.Logo.png"
@@ -31,12 +31,14 @@
                             id="logoImage" />
                     </a>
                 </div>
-                <div class="logoText">minimal gpa</div>
+                <div class="logoText noselect">minimal gpa</div>
             </div>
 
             <div class="topLeftContent">
-                <div onclick="contactButtonClick()" class="contactUsText">Contact Us</div>
-                <div onclick="infoButtonClick()" class="helpText">Help</div>
+                <div onclick="contactButtonClick()" class="contactUsText noselect">
+                    Contact Us
+                </div>
+                <div onclick="infoButtonClick()" class="helpText noselect">Help</div>
             </div>
         </header>
 
@@ -47,7 +49,7 @@
 
         <div class="infoModal" id="infoModal">
             <div class="infoModalContent">
-                <div id="closeInfoModal" class="closeModal">+</div>
+                <div id="closeInfoModal" class="closeModal noselect">+</div>
 
                 <h1>Help</h1>
                 <hr />
@@ -204,19 +206,19 @@
 
                     <li>
                         <div class="infoQuestion">
-                            <span>Contact Us</span>
+                            <span>Credit</span>
                             <span>+</span>
                         </div>
                         <div class="infoAnswer">
                             <span>
-                                Reach out to:
+                                Created by: 
                                 <br />
-
-                                <a href="https://twitter.com/IanL_dev">
-                                    @IanL_dev
-                                </a>
+                                Ian Lochridge - Developer
                                 <br />
-                                simplylochapps@gmail.com
+                                Leo Qiu - Developer
+                                <br />
+                                James Thompson - Designer
+                               
                             </span>
                         </div>
                     </li>
@@ -224,24 +226,45 @@
                 <span id="currentVersionNumber"> Version 0.0.1 </span>
             </div>
         </div>
-        
-        
-        <div class="infoModal" id="infoModal">
-            <div class="contactModalContent">
-                <div id="closeContactModal" class="closeModal">+</div>
+
+        <div class="contactModal">
+    <div class="contactModalContent">
+                <div id="closeContactModal" class="closeModal noselect">+</div>
 
                 <h1>Contact Us</h1>
-                <hr />
-
                
-                
+               <div id="openHelpMenuFromContact" class ="noselect"> <h3> <u> Check Out Our FAQ First </u></h3> </div>
+                <hr />
+                <select id="contactModaleSelect" class = "contactModalSelectElements" placeholder="Please Select your Issue">
+                <option value="" disabled selected hidden> Please Select a Topic</option>
+                <option value = "Software Bug">Software Bug</option>
+                <option value = "Software Bug">Other</option>
+                </select>
+             <hr />
+           
+        <span class= "hintContactText noselect">Email</span>
+                <input type="text" id="contactModalEmail" class ="contactModalTextElements" placeholder="email@example.com" />
+                  <hr />
+        <span class= "hintContactText noselect">Name</span>
+                 <input type="text" id="contactModalName"  class ="contactModalTextElements" placeholder ="john smith" />
+                <hr />
+        
+               <span class= "hintContactText noselect">Message</span>
+                <textarea id = "contactModalMessage" placeholder = "Your message..." rows="4" cols="50"></textarea>
+                <hr />
+                  <hr />
+                            <button
+                            id="sendEmailButton"
+                            class="sendEmailButton noselect"
+                            type="button"
+                            onclick="sendEmail()">
+                            Send Away
+                        </button>
+           
+            <h4>We will get back to you in 2-3 buisness days  </h4>
             </div>
         </div>
-        
-        
-
         <form id="courseForm"></form>
-
         <script src="minimalGPA_v0.0.2.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
