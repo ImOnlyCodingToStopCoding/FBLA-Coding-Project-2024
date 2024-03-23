@@ -1,59 +1,105 @@
 var semesterCounter = 0;
 var courseCounters = { 0: 1 };
-//---------------------------------------------------------------------------------------------------------------------------
+var semesterLimit = 10;
+var courseLimit = 20;
+
+window.addEventListener("load", function () {
+    //when the screen initializes add a semester automatically
+    addSemesterField(1);
+});
+//--------------------------------------------------------------------------------------------------------------------
+document //establish x button functionality for help page
+    .getElementById("closeInfoModal")
+    .addEventListener("click", function () {
+        document.querySelector(".infoModal").style.display = "none";
+        const infoQuestions = document.querySelectorAll(".infoQuestion");
+        infoQuestions.forEach(function (infoQuestion) {
+            infoQuestion.classList.remove("open"); //automatically close all opened questions.
+            infoQuestion.addEventListener("click", function () {
+                //re-add the event listener
+                infoQuestion.classList.toggle("open");
+            });
+        });
+        lockScrolling("unlock");
+    });
+//--------------------------------------------------------------------------------------------------------------------
+document //establish x button functionality for contact page
+    .getElementById("closeContactModal")
+    .addEventListener("click", function () {
+        document.querySelector(".contactModal").style.display = "none";
+        lockScrolling("unlock");
+    });
+//--------------------------------------------------------------------------------------------------------------------
+window.onclick = (event) => {
+    var infoModal = document.querySelector(".infoModal");
+    var resultsModal = document.querySelector(".resultsModal");
+    var contactModal = document.querySelector(".contactModal");
+
+    if (
+        event.target.matches(".infoModal") &&
+        getComputedStyle(infoModal).display === "flex" &&
+        !event.target.matches(".helpText")
+    ) {
+        document.querySelector(".infoModal").style.display = "none";
+        const infoQuestions = document.querySelectorAll(".infoQuestion");
+        infoQuestions.forEach(function (infoQuestion) {
+            infoQuestion.classList.remove("open"); //automatically close all opened questions.
+            infoQuestion.addEventListener("click", function () {
+                //re-add the event listener
+                infoQuestion.classList.toggle("open");
+            });
+        });
+        lockScrolling("unlock");
+    }
+    //-----------------------------------------------
+    if (
+        event.target.matches(".resultsModal") &&
+        getComputedStyle(resultsModal).display === "flex" &&
+        !event.target.matches(".calculateButton")
+    ) {
+        document.querySelector(".resultsModal").style.display = "none";
+        var deleteOldModalContent = document.getElementById(
+            "resultsModalContentid"
+        ); //delete old modal content
+        deleteOldModalContent.remove();
+        lockScrolling("unlock");
+    }
+    //-----------------------------------------------
+    if (
+        event.target.matches(".contactModal") &&
+        getComputedStyle(contactModal).display === "flex" &&
+        !event.target.matches(".contactText")
+    ) {
+        document.querySelector(".contactModal").style.display = "none";
+        lockScrolling("unlock");
+    }
+};
+//--------------------------------------------------------------------------------------------------------------------
+document //redirect user from contact screen to help screen
+    .getElementById("openHelpMenuFromContact")
+    .addEventListener("click", function () {
+        const infoQuestions = document.querySelectorAll(".infoQuestion");
+        infoQuestions.forEach(function (infoQuestion) {
+            infoQuestion.addEventListener("click", function () {
+                infoQuestion.classList.toggle("open");
+            });
+        });
+
+        document.querySelector(".contactModal").style.display = "none";
+        document.querySelector(".infoModal").style.display = "flex";
+    });
+//--------------------------------------------------------------------------------------------------------------------
 function removeCourseField(semesterIndex, courseIndex) {
     if (courseCounters[semesterIndex] > 1) {
         var deleteCourseElement = document.getElementById(
             "course-container_s" + semesterIndex + "_c" + courseIndex
         );
-      
-  //deleteCourseElement.remove();
-     /*   
-        for (var i = courseIndex; i <= courseCounters[semesterIndex]; i++) {
-            var courseNumber = document.getElementById(
-                "course-number_s" + semesterIndex + "_c" + (i + 1)
-            ); //establish vars for the courses to be changed 
-            
-             var deleteCourseButton = document.getElementById(
-                "deleteButton_s" + semesterIndex + "_c" + (i+1)
-            );
-            
-            
-            if (deleteCourseButton) {
-                
-            deleteCourseButton.setAttribute(
-                "onclick",
-                "removeCourseField(" + semesterIndex + "," + i + ")"
-            );
-                
-            deleteCourseButton.setAttribute(
-                "id",
-               "deleteButton_s" + semesterIndex + "_c" + i
-           );
-                
-            }
-            
-
-            if (courseNumber) {
-                //check for existance
-                courseNumber.textContent = i;
-                courseNumber.setAttribute(
-                    "id",
-                    "course-number_s" + semesterIndex + "_c" + i);
-            }
-            
-        }
-        */
-        
-        
         deleteCourseElement.remove();
         courseCounters[semesterIndex]--;
-        
-       changeCourseCredentials(semesterIndex); //change the courses names n stuff
-        
-   }
+        changeCourseCredentials(semesterIndex, courseIndex); //change the courses names n stuff
+    }
 }
-//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function removeSemesterField(semesterIndex) {
     if (semesterCounter > 1) {
         var deleteSemesterElement = document.getElementById(
@@ -90,65 +136,72 @@ function removeSemesterField(semesterIndex) {
         }
     }
 }
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-function changeCourseCredentials(semesterIndex){
-    
-    for (var j = 1; j <= courseCounters[semesterIndex]; j++) {
-            //--------------------------------------------------
-            var deleteCourseButton = document.getElementById(
-                "deleteButton_s" + (i + 1) + "_c" + j
-            );
-            deleteCourseButton.setAttribute(
-                "onclick",
-                "removeCourseField(" + i + "," + j + ")"
-            );
-            deleteCourseButton.setAttribute(
-                "id",
-                "deleteButton_s" + i + "_c" + j
-            );
-            //--------------------------------------------------
-            var courseNameInput = document.getElementById(
-                "course-name_s" + (i + 1) + "_c" + j
-            );
-
-            courseNameInput.setAttribute(
-                "oninput",
-                "courseInputChanged(" + i + "," + j + ")"
-            );
-            courseNameInput.setAttribute("id", "course-name_s" + i + "_c" + j);
-
-            //--------------------------------------------------
-            var courseGradeSelect = document.getElementById(
-                "course-grade_s" + (i + 1) + "_c" + j
-            );
-
-            courseGradeSelect.setAttribute(
-                "id",
-                "course-grade_s" + i + "_c" + j
-            );
-            //--------------------------------------------------
-            var courseTypeSelect = document.getElementById(
-                "class-type_s" + (i + 1) + "_c" + j
-            );
-
-            courseTypeSelect.setAttribute("id", "class-type_s" + i + "_c" + j);
-            //--------------------------------------------------
-            var courseContainer = document.getElementById(
-                "course-container_s" + (i + 1) + "_c" + j
-            );
-
-            courseContainer.setAttribute("id", "course-container_s" + i + "_c" + j
-            );
-            //--------------------------------------------------
-        }   
-    
-    
+//--------------------------------------------------------------------------------------------------------------------
+function changeCourseCredentials(semesterIndex, courseIndex) {
+    for (var j = courseIndex; j <= courseCounters[semesterIndex] + 1; j++) {
+        console.log("thingie ran");
+        var deleteCourseButton = document.getElementById(
+            "deleteButton_s" + semesterIndex + "_c" + (j + 1)
+        ); //grab courseIndex + 1
+        deleteCourseButton.setAttribute(
+            "onclick",
+            "removeCourseField(" + semesterIndex + "," + j + ")"
+        ); //set it to courseIndex
+        deleteCourseButton.setAttribute(
+            "id",
+            "deleteButton_s" + semesterIndex + "_c" + j
+        );
+        //--------------------------------------------------
+        var courseNameInput = document.getElementById(
+            "course-name_s" + semesterIndex + "_c" + (j + 1)
+        );
+        courseNameInput.setAttribute(
+            "oninput",
+            "courseInputChanged(" + semesterIndex + "," + j + ")"
+        );
+        courseNameInput.setAttribute(
+            "id",
+            "course-name_s" + semesterIndex + "_c" + j
+        );
+        //--------------------------------------------------
+        var courseGradeSelect = document.getElementById(
+            "course-grade_s" + semesterIndex + "_c" + (j + 1)
+        );
+        courseGradeSelect.setAttribute(
+            "id",
+            "course-grade_s" + semesterIndex + "_c" + j
+        );
+        //--------------------------------------------------
+        var courseTypeSelect = document.getElementById(
+            "class-type_s" + semesterIndex + "_c" + (j + 1)
+        );
+        courseTypeSelect.setAttribute(
+            "id",
+            "class-type_s" + semesterIndex + "_c" + j
+        );
+        //--------------------------------------------------
+        var courseContainer = document.getElementById(
+            "course-container_s" + semesterIndex + "_c" + (j + 1)
+        );
+        courseContainer.setAttribute(
+            "id",
+            "course-container_s" + semesterIndex + "_c" + j
+        );
+        //--------------------------------------------------
+        var courseNumber = document.getElementById(
+            "course-number_s" + semesterIndex + "_c" + (j + 1)
+        );
+        courseNumber.setAttribute(
+            "id",
+            "course-number_s" + semesterIndex + "_c" + j
+        );
+        courseNumber.textContent = j;
+    }
 }
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function changeSemesterCredentials(semesterIndex) {
     //Rename and reassign all values after a deletion.
-    for (var i = semesterIndex; i <= semesterCounter; i++) {
+    for (var i = semesterIndex; i <= semesterCounter + 1; i++) {
         courseCounters[i] = courseCounters[i + 1];
         var newCourseButton = document.getElementById(
             "newCourseButton_s" + (i + 1)
@@ -171,7 +224,6 @@ function changeSemesterCredentials(semesterIndex) {
         var deleteSemesterButton = document.getElementById(
             "deleteSemesterButton_s" + (i + 1)
         );
-
         if (deleteSemesterButton) {
             deleteSemesterButton.setAttribute(
                 "onclick",
@@ -183,12 +235,11 @@ function changeSemesterCredentials(semesterIndex) {
             );
         }
         //--------------------------------------------------
-
         var semesterLabel = document.getElementById("semName" + (i + 1));
         if (semesterLabel) {
             semesterLabel.setAttribute("id", "semName" + i);
-
             if (semesterLabel != "Semester" + (i + 1)) {
+                //dont replace semester name if it does not equal "Semester" + a numberj
                 semesterLabel.setAttribute("value", "Semester " + i);
             }
         }
@@ -246,14 +297,15 @@ function changeSemesterCredentials(semesterIndex) {
                 "course-container_s" + (i + 1) + "_c" + j
             );
 
-            courseContainer.setAttribute("id", "course-container_s" + i + "_c" + j
+            courseContainer.setAttribute(
+                "id",
+                "course-container_s" + i + "_c" + j
             );
             //--------------------------------------------------
         }
     }
 }
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+//--------------------------------------------------------------------------------------------------------------------
 function checkInputs() {
     //ensure no empty fields and highlight issues.
     var statusBool = true;
@@ -273,27 +325,27 @@ function checkInputs() {
         return { status: "invalid request" };
     }
 }
-//--------------------------------------------------------------------
-
+//--------------------------------------------------------------------------------------------------------------------
 function addCourseField(semesterIndex) {
-    if (!courseCounters[semesterIndex]) {
-        courseCounters[semesterIndex] = 1;
-    } else {
-        courseCounters[semesterIndex]++;
-    }
+    if (courseCounters[semesterIndex] < courseLimit) {
+        if (!courseCounters[semesterIndex]) {
+            courseCounters[semesterIndex] = 1;
+        } else {
+            courseCounters[semesterIndex]++;
+        }
 
-    var courseContainer = document.createElement("div");
-    courseContainer.classList.add(
-        `course-container_s${semesterIndex}_c${courseCounters[semesterIndex]}`
-    );
-    courseContainer.innerHTML = `
+        var courseContainer = document.createElement("div");
+        courseContainer.classList.add(
+            `course-container_s${semesterIndex}_c${courseCounters[semesterIndex]}`
+        );
+        courseContainer.innerHTML = `
                             <div id="course-container_s${semesterIndex}_c${courseCounters[semesterIndex]}" class="courseContainer">
                             
                                 <div id="course-number_s${semesterIndex}_c${courseCounters[semesterIndex]}"
-                                class = "courseNumberMarker">${courseCounters[semesterIndex]} </div>
+                                class = "courseNumberMarker noselect">${courseCounters[semesterIndex]} </div>
                             
                                 <input type="text" id="course-name_s${semesterIndex}_c${courseCounters[semesterIndex]}" class="courseInput" placeholder="Course Name" oninput= "courseInputChanged(${semesterIndex}, ${courseCounters[semesterIndex]})">
-                                <div class="classGrade">
+                                <div class="classGrade noselect">
                                     <select id="course-grade_s${semesterIndex}_c${courseCounters[semesterIndex]}">
                                         <option value=4.0>A+</option>
                                         <option value=4.0>A</option>
@@ -310,7 +362,7 @@ function addCourseField(semesterIndex) {
                                         <option value=0.0>F</option>
                                     </select>
                                 </div>
-                                <div class="classType">
+                                <div class="classType noselect">
                                     <select id="class-type_s${semesterIndex}_c${courseCounters[semesterIndex]}">
                                         <option value="Normal">Normal</option>
                                         <option value="Honors">Honors</option>
@@ -322,7 +374,7 @@ function addCourseField(semesterIndex) {
 
                                 <button
                                 id="deleteButton_s${semesterIndex}_c${courseCounters[semesterIndex]}"
-                                class="deleteCourse"
+                                class="deleteCourse noselect"
                                 type="button"
                                 onclick= "removeCourseField(${semesterIndex},${courseCounters[semesterIndex]})" >
                                 &#10006
@@ -331,37 +383,35 @@ function addCourseField(semesterIndex) {
                             </div>
                         `;
 
-    document
-        .getElementById(`additionalFields_s${semesterIndex}`)
-        .appendChild(courseContainer);
-    
-    
-    
-    
-    
+        document
+            .getElementById(`additionalFields_s${semesterIndex}`)
+            .appendChild(courseContainer);
+    }
 }
-//-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function addSemesterField() {
-    semesterCounter++;
+    if (semesterCounter < semesterLimit) {
+        semesterCounter++;
 
-    if (!courseCounters[semesterCounter]) {
-        courseCounters[semesterCounter] = 0;
-    }
-    if (semesterCounter > 1) {
-        //remove the new semester button when a new semester is added to avoid duplicates
-        var addSemesterButtonElement =
-            document.getElementById("addSemesterButton");
-        addSemesterButtonElement.remove();
+        if (!courseCounters[semesterCounter]) {
+            courseCounters[semesterCounter] = 0;
+        }
 
-        var calculateGPAButtonElement =
-            document.getElementById("calculateGPAButton");
-        calculateGPAButtonElement.remove();
-    }
-    var semesterContainer = document.createElement("div");
-    var semesterId = `semesterContainer_s${semesterCounter}`;
-    semesterContainer.id = semesterId;
-    semesterContainer.classList.add("semesterContainer");
-    semesterContainer.innerHTML = `
+        if (semesterCounter > 1) {
+            //remove the new semester button when a new semester is added to avoid duplicates
+            var addSemesterButtonElement =
+                document.getElementById("addSemesterButton");
+            addSemesterButtonElement.remove();
+
+            var calculateGPAButtonElement =
+                document.getElementById("calculateGPAButton");
+            calculateGPAButtonElement.remove();
+        }
+        var semesterContainer = document.createElement("div");
+        var semesterId = `semesterContainer_s${semesterCounter}`;
+        semesterContainer.id = semesterId;
+        semesterContainer.classList.add("semesterContainer");
+        semesterContainer.innerHTML = `
 
                             <div class="semesterLabelElements">
 
@@ -370,7 +420,7 @@ function addSemesterField() {
 
                              <button
                                 id="deleteSemesterButton_s${semesterCounter}"
-                                class="deleteSemester"
+                                class="deleteSemester noselect"
                                 type="button"
                                 onclick= "removeSemesterField(${semesterCounter})" >
                                &#10006
@@ -388,7 +438,7 @@ function addSemesterField() {
                             <div class="addElements">
                                 <button
                                 id="newCourseButton_s${semesterCounter}"
-                                class="newCourse"
+                                class="newCourse noselect"
                                 type="button"
                                 onclick="addCourseField(${semesterCounter})">
                                 +Course
@@ -402,36 +452,28 @@ function addSemesterField() {
                             <div class="bottomButtons">
                                  <button
                                 id="addSemesterButton"
-                                class="newSemester"
+                                class="newSemester noselect"
                                 type="button"
                                 onclick="addSemesterField()">
                                 +Semester
                             </button>
                             <button
                             id="calculateGPAButton"
-                            class="calculateButton
+                            class="calculateButton noselect"
                             type="button"
                             onclick="calculateGPA(event)">
                             Calculate
                         </button>
                         </div>
                         `;
-    document.getElementById("courseForm").appendChild(semesterContainer);
-    addCourseField(semesterCounter);
-    addCourseField(semesterCounter);
-    addCourseField(semesterCounter);
-    addCourseField(semesterCounter);
+        document.getElementById("courseForm").appendChild(semesterContainer);
+        addCourseField(semesterCounter);
+        addCourseField(semesterCounter);
+        addCourseField(semesterCounter);
+        addCourseField(semesterCounter);
+    }
 }
-//--------------------------------------------------------------------------------------------------------------------------
-window.addEventListener("load", function () {
-    //when the screen initializes add a semester automatically
-    addSemesterField(1);
-    
-     
-});
-    
-
-//--------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function changeImage(onHover) {
     //make help icon slightly darker when hovered over.
     var infoButtonPicture = document.getElementById("infoButtonPicture");
@@ -441,7 +483,7 @@ function changeImage(onHover) {
         infoButtonPicture.src = "helpButtonImage.png";
     }
 }
-//---------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function calculateGPA(event) {
     event.preventDefault();
     var result = checkInputs();
@@ -594,7 +636,7 @@ function calculateGPA(event) {
         resultsModalContent.classList.add(`resultsModalContent`);
 
         resultsModalContent.innerHTML = `
-                <div id="closeResultModal" class="closeModal">+</div>
+                <div id="closeResultModal" class="closeModal noselect">+</div>
                 <br>
                 <h1> W:${weightedGPA} // UW:${unweightedGPA} </h1>
               
@@ -703,63 +745,7 @@ function calculateGPA(event) {
             lockScrolling("unlock");
         });
 }
-
-/*
- document
-        .getElementById("resultsModal")
-        .addEventListener("click", function () {
-            document.querySelector(".resultsModal").style.display = "none";
-            var deleteOldModalContent = document.getElementById(
-                "resultsModalContentid"
-            ); //delete old modal content
-            deleteOldModalContent.remove();
-            lockScrolling("unlock");
-        });
-*/
-
-document.getElementById("infoModal").addEventListener("click", infoModalOutsideClick());
-            
-function infoModalOutsideClick() {
-   console.log ("uakdjfd"); 
-    
-    
-}
-
-
-
-//--------------------------------------------------------------
-
-document
-    .getElementById("closeInfoModal")
-    .addEventListener("click", function () {
-        document.querySelector(".infoModal").style.display = "none";
-        const infoQuestions = document.querySelectorAll(".infoQuestion");
-        infoQuestions.forEach(function (infoQuestion) {
-            infoQuestion.classList.remove("open"); //automatically close all opened questions.
-            infoQuestion.addEventListener("click", function () {
-                //re-add the event listener
-                infoQuestion.classList.toggle("open");
-            });
-        });
-        lockScrolling("unlock");
-    });
-
-/*
-document
-    .getElementById("infoModal")
-    .addEventListener("click", function () {
-        document.querySelector(".infoModal").style.display = "none";
-        const infoQuestions = document.querySelectorAll(".infoQuestion");
-        infoQuestions.forEach(function (infoQuestion) {
-            infoQuestion.classList.remove("open"); //automatically close all opened questions.
-            infoQuestion.addEventListener("click", function () {
-                //re-add the event listener
-                infoQuestion.classList.toggle("open");
-            });
-        });
-        lockScrolling("unlock");
-    }); */
-//-----------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function courseInputChanged(semesterIndex, courseIndex) {
     // semesterIndex, courseIndex
     var currentCourseInput = document.getElementById(
@@ -772,10 +758,10 @@ function courseInputChanged(semesterIndex, courseIndex) {
         currentCourseInput.classList.remove("highlightedCourse");
     }
 }
-//-------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
 function lockScrolling(lockStatus) {
     if (lockStatus == "lock") {
-        window.scrollTo(10, 0); //move user up
+        window.scrollTo(15, 0); //move user up
         document.querySelector("body").style.overflow = "hidden"; //stop scrolling
         document.querySelector("body").style.height = "100%";
         document.querySelector("body").style.width = "100%";
@@ -798,21 +784,8 @@ function infoButtonClick() {
     lockScrolling("lock");
 }
 //--------------------------------------------------------------------------------------------------------------------
-
 function contactButtonClick() {
-   // document.querySelector(".contactModal").style.display = "flex";
-   // lockScrolling("lock");
-    alert("ran");
+    const contactModal = document.querySelector(".contactModal");
+    contactModal.style.display = "flex";
+    lockScrolling("lock");
 }
-
-
-
-
-
-
-
-
-
-
-
-
