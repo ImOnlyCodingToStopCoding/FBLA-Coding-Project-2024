@@ -29,7 +29,7 @@ h4 {
     font-size: 18px;
 }
 .courseInput {
-    height: 3.24rem;
+    height: 3.3rem;
     width: 190px;
     padding-left: 10px;
     text-decoration: none;
@@ -322,6 +322,7 @@ hr {
 }
 
 .resultsModal {
+      z-index: 1000;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -383,6 +384,7 @@ table {
 }
 
 .infoModal {
+      z-index: 1000;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -466,6 +468,7 @@ a {
 }
 
 .contactModal {
+      z-index: 1000;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -501,4 +504,77 @@ a {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
+}
+
+.statusText {
+    text-align: center; 
+    font-size: 17px;
+    line-height: 1em;
+}
+
+
+.cookiesModal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+      z-index: 1000;
+}
+
+.cookiesModalContent {
+    z-index: 1000;
+    width: 325px;
+    height: 325px;
+    background-color: #ffffff;
+    line-height: 2em;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#cookieText {
+    line-height: 1.5em;
+}
+
+#cookieInfoLink {
+    line-height: 0em; 
+}
+
+#cookieTitle {
+     line-height: 0.2em;
+}
+
+#cookieAcceptButton {
+    background-color: #a07d20;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 8px;
+    height: 3rem;
+    width: 187px;
+    
+}
+
+#acceptCookiesLink {
+     cursor: pointer;
+}
+
+
+#denyCookiesLink {
+     cursor: pointer;
 }
