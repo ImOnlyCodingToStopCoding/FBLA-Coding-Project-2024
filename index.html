@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
+        <meta charset="UTF-8" />
         <title>minimalGPA.com</title>
         <meta name="description" content="GPA calculator for highschoolers" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -35,14 +36,19 @@
             </div>
 
             <div class="topLeftContent">
-                <div onclick="contactButtonClick()" class="contactUsText noselect">
+                <div
+                    onclick="contactButtonClick()"
+                    class="contactUsText noselect">
                     Contact Us
                 </div>
-                <div onclick="infoButtonClick()" class="helpText noselect">Help</div>
+                <div onclick="infoButtonClick()" class="helpText noselect">
+                    Help
+                </div>
             </div>
         </header>
 
         <hr />
+        <div class="statusText"></div>
         <br />
 
         <div class="resultsModal" id="resultsModal"></div>
@@ -206,19 +212,60 @@
 
                     <li>
                         <div class="infoQuestion">
+                            <span>Cookie Policy + IndexDB</span>
+                            <span>+</span>
+                        </div>
+                        <div class="infoAnswer">
+                            <span>
+                                We use cookies to track whether or not you have
+                                visited the page before. Thus our cookie only
+                                stores one value "firstVisitStatus". We do not
+                                store your personal information within our
+                                cookies. We do use IndexedDB, a local, web-based
+                                database to keep what you input to our site so
+                                that the next time you visit we can pull up what
+                                you have already inputted. If you have not
+                                clicked "I accept cookies", no cookies are being
+                                saved. If you have clicked "I accept cookies",
+                                and would like to deny cookies, click the Deny
+                                Cookies link below. Alternatively if you would
+                                like to accept cookies click the Accept Cookies
+                                link below.
+
+                                <br />
+                                <br />
+
+                                <span
+                                    id="denyCookiesLink"
+                                    onclick="denyCookiesClick()"
+                                    ><u>Deny Cookies</u>
+                                </span>
+
+                                <br />
+                                <br />
+                                <span
+                                    id="acceptCookiesLink"
+                                    onclick="openCookiesPage()"
+                                    ><u>Accept Cookies</u>
+                                </span>
+                            </span>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="infoQuestion">
                             <span>Credit</span>
                             <span>+</span>
                         </div>
                         <div class="infoAnswer">
                             <span>
-                                Created by: 
+                                Created by:
                                 <br />
                                 Ian Lochridge - Developer
                                 <br />
                                 Leo Qiu - Developer
                                 <br />
                                 James Thompson - Designer
-                               
                             </span>
                         </div>
                     </li>
@@ -228,42 +275,80 @@
         </div>
 
         <div class="contactModal">
-    <div class="contactModalContent">
+            <div class="contactModalContent">
                 <div id="closeContactModal" class="closeModal noselect">+</div>
 
                 <h1>Contact Us</h1>
-               
-               <div id="openHelpMenuFromContact" class ="noselect"> <h3> <u> Check Out Our FAQ First </u></h3> </div>
+
+                <div id="openHelpMenuFromContact" class="noselect">
+                    <h3><u> Check Out Our FAQ First </u></h3>
+                </div>
                 <hr />
-                <select id="contactModaleSelect" class = "contactModalSelectElements" placeholder="Please Select your Issue">
-                <option value="" disabled selected hidden> Please Select a Topic</option>
-                <option value = "Software Bug">Software Bug</option>
-                <option value = "Software Bug">Other</option>
+                <select
+                    id="contactModaleSelect"
+                    class="contactModalSelectElements"
+                    placeholder="Please Select your Issue">
+                    <option value="" disabled selected hidden>
+                        Please Select a Topic
+                    </option>
+                    <option value="Software Bug">Software Bug</option>
+                    <option value="Software Bug">Other</option>
                 </select>
-             <hr />
-           
-        <span class= "hintContactText noselect">Email</span>
-                <input type="text" id="contactModalEmail" class ="contactModalTextElements" placeholder="email@example.com" />
-                  <hr />
-        <span class= "hintContactText noselect">Name</span>
-                 <input type="text" id="contactModalName"  class ="contactModalTextElements" placeholder ="john smith" />
                 <hr />
-        
-               <span class= "hintContactText noselect">Message</span>
-                <textarea id = "contactModalMessage" placeholder = "Your message..." rows="4" cols="50"></textarea>
+
+                <span class="hintContactText noselect">Email</span>
+                <input
+                    type="text"
+                    id="contactModalEmail"
+                    class="contactModalTextElements"
+                    placeholder="email@example.com" />
                 <hr />
-                  <hr />
-                            <button
-                            id="sendEmailButton"
-                            class="sendEmailButton noselect"
-                            type="button"
-                            onclick="sendEmail()">
-                            Send Away
-                        </button>
-           
-            <h4>We will get back to you in 2-3 buisness days  </h4>
+                <span class="hintContactText noselect">Name</span>
+                <input
+                    type="text"
+                    id="contactModalName"
+                    class="contactModalTextElements"
+                    placeholder="john smith" />
+                <hr />
+
+                <span class="hintContactText noselect">Message</span>
+                <textarea
+                    id="contactModalMessage"
+                    placeholder="Your message..."
+                    rows="4"
+                    cols="50"></textarea>
+                <hr />
+                <hr />
+                <button
+                    id="sendEmailButton"
+                    class="sendEmailButton noselect"
+                    type="button"
+                    onclick="sendEmail()">
+                    Send Away
+                </button>
+
+                <h4>We will get back to you in 2-3 buisness days</h4>
             </div>
         </div>
+
+        <div class="cookiesModal" id="cookiesModal">
+            <div class="cookiesModalContent">
+                <div id="closeCookiesModal" class="closeModal noselect">+</div>
+
+                <h2 id="cookieTitle">Accept Cookies</h2>
+                <h5 id="cookieText">
+                    This website uses cookies to store text information on
+                    whether you have visited the website before so we can keep
+                    your inputted class data saved. Visit our help page to find
+                    the cookie policy
+                </h5>
+
+                <button id="cookieAcceptButton" onclick="cookiesAcceptClick()">
+                    I accept
+                </button>
+            </div>
+        </div>
+
         <form id="courseForm"></form>
         <script src="minimalGPA_v0.0.2.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
