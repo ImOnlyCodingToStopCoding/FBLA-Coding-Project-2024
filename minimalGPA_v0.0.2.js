@@ -2,10 +2,29 @@ var semesterCounter = 0;
 var courseCounters = { 0: 1 };
 var semesterLimit = 10;
 var courseLimit = 20;
+var startingCoursesPerSem = 4;
+var saveTimerStatus = "locked";
+var cookiesAllowed = false;
+
+var statusText = document.querySelector(".statusText");
+let timeout;
 
 window.addEventListener("load", function () {
-    //when the screen initializes add a semester automatically
-    addSemesterField(1);
+    //when the screen initializes add a semester or extract saved data
+    let cookieInformation = document.cookie;
+    if (cookieInformation == "") {
+        console.log("Cookie not found");
+        openCookiesPage();
+        addSemesterField();
+
+        for (let i = 1; i <= startingCoursesPerSem; i++) {
+            addCourseField(1);
+        }
+        saveTimerStatus = "unlocked";
+    } else {
+        console.log("Cookie found");
+        extractSavedData();
+    }
 });
 //--------------------------------------------------------------------------------------------------------------------
 document //establish x button functionality for help page
@@ -27,6 +46,13 @@ document //establish x button functionality for contact page
     .getElementById("closeContactModal")
     .addEventListener("click", function () {
         document.querySelector(".contactModal").style.display = "none";
+        lockScrolling("unlock");
+    });
+//--------------------------------------------------------------------------------------------------------------------
+document //establish x button functionality for cookie page
+    .getElementById("closeCookiesModal")
+    .addEventListener("click", function () {
+        document.querySelector(".cookiesModal").style.display = "none";
         lockScrolling("unlock");
     });
 //--------------------------------------------------------------------------------------------------------------------
@@ -88,6 +114,234 @@ document //redirect user from contact screen to help screen
         document.querySelector(".contactModal").style.display = "none";
         document.querySelector(".infoModal").style.display = "flex";
     });
+//------------------------------------------------------------------------------------------------------------------------------
+function autoPopulateFieldFromSave(
+    storageCourseNamesArray,
+    storageCourseTypesArray,
+    storageCourseGradesArray,
+    storageSemesterNamesArray,
+    storageSemesterCounter,
+    storageCourseCounters
+) {
+    var i = 0;
+    //init courses and semesters from save
+    for (let i = 1; i <= storageSemesterCounter; i++) {
+        addSemesterField();
+        const semesterIndex = semesterCounter;
+
+        for (let j = 1; j <= storageCourseCounters[i]; j++) {
+            addCourseField(semesterIndex);
+        }
+    }
+    //fill values
+    i = 0;
+    var courseNameInputs = document.querySelectorAll(".courseInput"); //grab all courses
+    courseNameInputs.forEach(function (courseNameInput) {
+        courseNameInput.setAttribute("value", storageCourseNamesArray[i]);
+        i++;
+    });
+
+    i = 0;
+    var courseGradeInputs = document.querySelectorAll(".classGrade select"); //grab all courses
+    courseGradeInputs.forEach(function (courseGradeInput) {
+        courseGradeInput.value = storageCourseGradesArray[i];
+        i++;
+    });
+    i = 0;
+    var courseTypeInputs = document.querySelectorAll(".classType select"); //grab all courses
+    courseTypeInputs.forEach(function (courseTypeInput) {
+        courseTypeInput.value = storageCourseTypesArray[i];
+        i++;
+    });
+
+    saveTimerStatus = "unlocked";
+}
+//------------------------------------------------------------------------------------------------------------------------------
+function extractSavedData() {
+    var now = new Date();
+    console.log("------------------------------------------------");
+    console.log("Extracting Data");
+    console.log(now);
+    const request = indexedDB.open("GPA_DB", 1);
+
+    request.onerror = function (event) {
+        console.error("Error opening database:", event.target.error);
+    };
+
+    request.onsuccess = function (event) {
+        const db = event.target.result;
+
+        const transaction = db.transaction(["gpaData"], "readonly");
+        const objectStore = transaction.objectStore("gpaData");
+        const cursorRequest = objectStore.openCursor();
+
+        let storageCourseNamesArray = [];
+        let storageCourseGradesArray = [];
+        let storageCourseTypesArray = [];
+        let storageSemesterNamesArray = [];
+        let storageSemesterCounter = 0;
+        let storageCourseCounters = {};
+
+        cursorRequest.onsuccess = function (event) {
+            const cursor = event.target.result;
+            if (cursor) {
+                const data = cursor.value;
+                storageCourseNamesArray = data.courseNames;
+                storageCourseTypesArray = data.courseTypes;
+                storageCourseGradesArray = data.courseGrades;
+                storageSemesterNamesArray = data.semesterNames;
+                storageCourseNamesArray = data.courseNames;
+                storageSemesterCounter = data.semesterCounter;
+                Object.assign(storageCourseCounters, data.courseCounters);
+
+                autoPopulateFieldFromSave(
+                    storageCourseNamesArray,
+                    storageCourseTypesArray,
+                    storageCourseGradesArray,
+                    storageSemesterNamesArray,
+                    storageSemesterCounter,
+                    storageCourseCounters
+                );
+
+                cursor.continue();
+            } else {
+                console.log("Data retrieved successfully.");
+                console.log("courseNamesArray:", storageCourseNamesArray);
+                console.log("courseGradesArray:", storageCourseGradesArray);
+                console.log("courseTypesArray:", storageCourseTypesArray);
+                console.log("semesterNamesArray:", storageSemesterNamesArray);
+                console.log("semesterCounter:", storageSemesterCounter);
+                console.log("courseCounters:", storageCourseCounters);
+            }
+        };
+
+        cursorRequest.onerror = function (event) {
+            console.error("Error retrieving data:", event.target.error);
+        };
+    };
+}
+//------------------------------------------------------------------------------------------------------------------------------
+function save() {
+    var courseNamesArray = [];
+    var courseGradesArray = [];
+    var courseLetterGradesArray = [];
+    var courseTypesArray = [];
+    var semesterNamesArray = [];
+
+    var courseNameInputs = document.querySelectorAll(".courseInput"); //add all course names to the array
+
+    courseNameInputs.forEach(function (courseNameInput) {
+        courseNamesArray.push(courseNameInput.value);
+    });
+    //------------------------------------------------------------------------------------------------------------------
+    var courseGradeInputs = document.querySelectorAll(".classGrade select");
+
+    courseGradeInputs.forEach(function (courseGradeInput) {
+        var selectedText =
+            courseGradeInput.options[courseGradeInput.selectedIndex].text;
+
+        courseLetterGradesArray.push(selectedText);
+
+        var selectedOption =
+            courseGradeInput.options[courseGradeInput.selectedIndex];
+        var selectedValue = selectedOption.value;
+        courseGradesArray.push(selectedValue);
+    });
+    //------------------------------------------------------------------------------------------------------------------
+    var courseTypeInputs = document.querySelectorAll(".classType select");
+
+    courseTypeInputs.forEach(function (courseTypeInput) {
+        var selectedOption =
+            courseTypeInput.options[courseTypeInput.selectedIndex];
+        var selectedValue = selectedOption.value;
+        courseTypesArray.push(selectedValue);
+    });
+
+    var semesterLabelInputs = document.querySelectorAll(".semesterLabel"); //node list
+
+    semesterLabelInputs.forEach(function (semesterLabelInput, index) {
+        semesterNamesArray.push(semesterLabelInput.value);
+    });
+
+    var now = new Date();
+    console.log("------------------------------------------------");
+    console.log("Saving in progress");
+    console.log(now);
+
+    const request = indexedDB.open("GPA_DB", 1);
+
+    request.onupgradeneeded = function (event) {
+        const db = event.target.result;
+
+        //object store
+        const objectStore = db.createObjectStore("gpaData", {
+            autoIncrement: true
+        });
+
+        //Indexes
+        objectStore.createIndex("courseNames", "courseNames", {
+            unique: false
+        });
+        objectStore.createIndex("courseGrades", "courseGrades", {
+            unique: false
+        });
+        objectStore.createIndex("courseTypes", "courseTypes", {
+            unique: false
+        });
+        objectStore.createIndex("semesterNames", "semesterNames", {
+            unique: false
+        });
+        objectStore.createIndex("semesterCounter", "semesterCounter", {
+            unique: false
+        });
+        objectStore.createIndex("courseCounters", "courseCounters", {
+            unique: false
+        });
+    };
+
+    request.onsuccess = function (event) {
+        const db = event.target.result;
+        const transaction = db.transaction(["gpaData"], "readwrite");
+        const objectStore = transaction.objectStore("gpaData");
+        const clearRequest = objectStore.clear();
+        clearRequest.onsuccess = function () {
+            console.log("Old data deleted successfully.");
+        };
+        clearRequest.onerror = function () {
+            console.error("Failed to delete old data.");
+        };
+
+        const addRequest = objectStore.add({
+            courseNames: courseNamesArray,
+            courseGrades: courseGradesArray,
+            courseTypes: courseTypesArray,
+            semesterNames: semesterNamesArray,
+            semesterCounter: semesterCounter,
+            courseCounters: courseCounters
+        });
+
+        //error handling
+        addRequest.onsuccess = function () {
+            console.log("Data added successfully.");
+        };
+
+        addRequest.onerror = function () {
+            console.error("Failed to add data.");
+        };
+    };
+    statusText.textContent = "✓ Saved";
+}
+//--------------------------------------------------------------------------------------------------------------------
+function saveTimer() {
+    //autosave timer triggered by user actions
+    if (saveTimerStatus == "unlocked") {
+        statusText.textContent = "⟳ Saving...";
+        clearTimeout(timeout);
+        timeout = setTimeout(save, 1000);
+    } else {
+        console.log("Save Blocked while populating");
+    }
+}
 //--------------------------------------------------------------------------------------------------------------------
 function removeCourseField(semesterIndex, courseIndex) {
     if (courseCounters[semesterIndex] > 1) {
@@ -96,6 +350,7 @@ function removeCourseField(semesterIndex, courseIndex) {
         );
         deleteCourseElement.remove();
         courseCounters[semesterIndex]--;
+        saveTimer();
         changeCourseCredentials(semesterIndex, courseIndex); //change the courses names n stuff
     }
 }
@@ -134,12 +389,12 @@ function removeSemesterField(semesterIndex) {
 
             document.getElementById("courseForm").appendChild(bottomButtons);
         }
+        saveTimer();
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
 function changeCourseCredentials(semesterIndex, courseIndex) {
     for (var j = courseIndex; j <= courseCounters[semesterIndex] + 1; j++) {
-        console.log("thingie ran");
         var deleteCourseButton = document.getElementById(
             "deleteButton_s" + semesterIndex + "_c" + (j + 1)
         ); //grab courseIndex + 1
@@ -346,7 +601,7 @@ function addCourseField(semesterIndex) {
                             
                                 <input type="text" id="course-name_s${semesterIndex}_c${courseCounters[semesterIndex]}" class="courseInput" placeholder="Course Name" oninput= "courseInputChanged(${semesterIndex}, ${courseCounters[semesterIndex]})">
                                 <div class="classGrade noselect">
-                                    <select id="course-grade_s${semesterIndex}_c${courseCounters[semesterIndex]}">
+                                    <select onclick = "saveTimer()" id="course-grade_s${semesterIndex}_c${courseCounters[semesterIndex]}">
                                         <option value=4.0>A+</option>
                                         <option value=4.0>A</option>
                                         <option value=3.7>A-</option>
@@ -363,7 +618,7 @@ function addCourseField(semesterIndex) {
                                     </select>
                                 </div>
                                 <div class="classType noselect">
-                                    <select id="class-type_s${semesterIndex}_c${courseCounters[semesterIndex]}">
+                                    <select onclick = "saveTimer()" id="class-type_s${semesterIndex}_c${courseCounters[semesterIndex]}">
                                         <option value="Normal">Normal</option>
                                         <option value="Honors">Honors</option>
                                         <option value="AP">AP</option>
@@ -386,10 +641,12 @@ function addCourseField(semesterIndex) {
         document
             .getElementById(`additionalFields_s${semesterIndex}`)
             .appendChild(courseContainer);
+
+        saveTimer();
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
-function addSemesterField() {
+function addSemesterField(courseCount) {
     if (semesterCounter < semesterLimit) {
         semesterCounter++;
 
@@ -415,7 +672,7 @@ function addSemesterField() {
 
                             <div class="semesterLabelElements">
 
-                            <input class="semesterLabel" type="text" id="semName${semesterCounter}" value="Semester ${semesterCounter}">
+                            <input class="semesterLabel" type="text" id="semName${semesterCounter}" oninput = "saveTimer()" value="Semester ${semesterCounter}">
 
 
                              <button
@@ -467,20 +724,7 @@ function addSemesterField() {
                         </div>
                         `;
         document.getElementById("courseForm").appendChild(semesterContainer);
-        addCourseField(semesterCounter);
-        addCourseField(semesterCounter);
-        addCourseField(semesterCounter);
-        addCourseField(semesterCounter);
-    }
-}
-//--------------------------------------------------------------------------------------------------------------------
-function changeImage(onHover) {
-    //make help icon slightly darker when hovered over.
-    var infoButtonPicture = document.getElementById("infoButtonPicture");
-    if (onHover) {
-        infoButtonPicture.src = "helpButtonImageHover.png";
-    } else {
-        infoButtonPicture.src = "helpButtonImage.png";
+        saveTimer();
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -490,7 +734,7 @@ function calculateGPA(event) {
     if (result.status !== "invalid request") {
         lockScrolling("lock");
         document.querySelector(".resultsModal").style.display = "flex";
-
+        saveTimer();
         var courseNamesArray = [];
         var courseGradesArray = [];
         var courseLetterGradesArray = [];
@@ -748,6 +992,9 @@ function calculateGPA(event) {
 //--------------------------------------------------------------------------------------------------------------------
 function courseInputChanged(semesterIndex, courseIndex) {
     // semesterIndex, courseIndex
+
+    saveTimer();
+
     var currentCourseInput = document.getElementById(
         "course-name_s" + semesterIndex + "_c" + courseIndex
     );
@@ -788,4 +1035,31 @@ function contactButtonClick() {
     const contactModal = document.querySelector(".contactModal");
     contactModal.style.display = "flex";
     lockScrolling("lock");
+}
+//--------------------------------------------------------------------------------------------------------------------
+function cookiesAcceptClick() {
+    cookiesAllowed = true;
+    document.cookie = "firstVisitStatus=true";
+    document.querySelector(".cookiesModal").style.display = "none";
+    lockScrolling("unlock");
+}
+//--------------------------------------------------------------------------------------------------------------------
+function openCookiesPage() {
+    document.querySelector(".infoModal").style.display = "none";
+    const infoQuestions = document.querySelectorAll(".infoQuestion");
+    infoQuestions.forEach(function (infoQuestion) {
+        infoQuestion.classList.remove("open"); //automatically close all opened questions.
+        infoQuestion.addEventListener("click", function () {
+            //re-add the event listener
+            infoQuestion.classList.toggle("open");
+        });
+    });
+    lockScrolling("lock");
+    document.querySelector(".cookiesModal").style.display = "flex";
+}
+
+function denyCookiesClick() {
+    document.cookie =
+        "firstVisitStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    alert("Cookies deleted successfully");
 }
