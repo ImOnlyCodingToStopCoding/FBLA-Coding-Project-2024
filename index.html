@@ -2,7 +2,8 @@
 <html lang="en-US">
     <head>
         <meta charset="UTF-8" />
-        <title>minimalGPA.com</title>
+        <title>minimal gpa</title>
+        <link rel="icon" href="FunApplets.Logo.png" type="image/x-icon" />
         <meta name="description" content="GPA calculator for highschoolers" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link
@@ -194,6 +195,82 @@
                                 Version History:
                                 <br />
                                 <br />
+                                v0.0.5 (3/31/24)
+                                <br />
+                                -fixed semester auto loading courses bug
+                                <br />
+                                -fixed out of order semester course bug
+                                <br />
+                                -fixed semester credentials changing function
+                                <br />
+                                -fixed help page question opening bug after
+                                cookie page click
+                                <br />
+                                -fixed letter cutoff bug with select button
+                                click
+                                <br />
+                                -moved deny cookies and accept cookies buttons
+                                <br />
+                                -fixed course numbers bug with over 10 courses;
+                                added 0 to the front of courses under 10
+                                <br />
+                                -added logo image to top of tab and changed tab
+                                text
+                                <br />
+                                -added semester labels saving/autofilling
+                                
+                                <br />
+                                <br />
+                                v0.0.4 (3/26/24)
+                                <br />
+                                -added autosaving functionality
+                                <br />
+
+                                -added cookies
+                                <br />
+                                -added cookie logic
+                                <br />
+                                -added initialization logic
+                                <br />
+                                -other small changes to supplement autosaving
+
+                                <br />
+                                <br />
+                                v0.0.3 (3/23/24)
+                                <br />
+                                -add noselect classes to several elements
+                                <br />
+                                -fixed course numbers out of order deletion bug
+                                <br />
+                                -fixed minor typo variable name within calc
+                                function
+                                <br />
+                                -added hard limits to semesters and courses per
+                                semester (10 and 20)
+                                <br />
+                                -add frontend code for contact us modal
+                                <br />
+                                -linked contact to help with faq link
+                                <br />
+                                -add outside exit click for modals
+                                <br />
+                                -refactored code
+                                <br />
+                                -fixed course renaming function to be functional
+
+                                <br />
+                                <br />
+                                v0.0.2 (2/18/24)
+                                <br />
+                                -major redesign with css and ui changes
+                                <br />
+                                -removed help button in bottom corner
+                                <br />
+                                -added help and contact top left buttons
+                                <br />
+                                -added course numbers
+                                <br />
+                                <br />
                                 v0.0.1 (1/26/24)
                                 <br />
                                 -fixed css styling bug for select menus
@@ -231,23 +308,6 @@
                                 Cookies link below. Alternatively if you would
                                 like to accept cookies click the Accept Cookies
                                 link below.
-
-                                <br />
-                                <br />
-
-                                <span
-                                    id="denyCookiesLink"
-                                    onclick="denyCookiesClick()"
-                                    ><u>Deny Cookies</u>
-                                </span>
-
-                                <br />
-                                <br />
-                                <span
-                                    id="acceptCookiesLink"
-                                    onclick="openCookiesPage()"
-                                    ><u>Accept Cookies</u>
-                                </span>
                             </span>
                         </div>
                     </li>
@@ -269,8 +329,19 @@
                             </span>
                         </div>
                     </li>
+                    <button
+                        id="acceptCookiesButton"
+                        onclick="openCookiesPage()">
+                        Accept Cookies
+                    </button>
+
+                    <br />
+
+                    <button id="denyCookiesButton" onclick="denyCookiesClick()">
+                        Deny Cookies
+                    </button>
                 </ul>
-                <span id="currentVersionNumber"> Version 0.0.1 </span>
+                <span id="currentVersionNumber"> Version 0.0.5 </span>
             </div>
         </div>
 
@@ -342,6 +413,8 @@
                     your inputted class data saved. Visit our help page to find
                     the cookie policy
                 </h5>
+                <br />
+                <br />
 
                 <button id="cookieAcceptButton" onclick="cookiesAcceptClick()">
                     I accept
