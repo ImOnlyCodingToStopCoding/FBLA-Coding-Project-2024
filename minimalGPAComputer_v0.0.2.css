@@ -25,10 +25,9 @@ h3 {
 }
 
 h4 {
-   text-align: center;
-    font-size: 15px;  
-     font-weight: normal;
- 
+    text-align: center;
+    font-size: 15px;
+    font-weight: normal;
 }
 .courseInput {
     height: 3.28rem;
@@ -65,7 +64,7 @@ label {
     font-weight: bold;
     width: 20%;
     height: 3.5rem;
-    border:1px solid #b6b6b6; 
+    border: 1px solid #b6b6b6;
     background-color: white;
     z-index: 0;
 }
@@ -75,11 +74,11 @@ label {
     justify-content: center;
 }
 
-
 .classGrade select {
     height: 3.5rem;
     width: 100%;
-    padding: 16px 20px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-top: 1px solid #b6b6b6;
     border-bottom: 1px solid #b6b6b6;
     border-left: none;
@@ -93,7 +92,8 @@ label {
 .classType select {
     height: 3.5rem;
     width: 100%;
-    padding: 16px 20px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-top: 1px solid #b6b6b6;
     border-top-right-radius: 0.25rem;
     border-bottom: 1px solid #b6b6b6;
@@ -106,11 +106,10 @@ label {
     z-index: 0;
 }
 
-
 .courseNumberMarker {
-    font-size: 22px;  
+    font-size: 22px;
     transform: translate(-16px, 19px);
-    color: gray;     
+    color: gray;
 }
 
 select:focus {
@@ -122,7 +121,6 @@ select:focus {
     position: relative;
     justify-content: center;
     width: 100%;
-    
 }
 
 .courseLabel {
@@ -134,11 +132,11 @@ select:focus {
 .header {
     position: relative;
     width: 100%;
-    line-height: 0.1em; 
+    line-height: 0.1em;
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: none;
-     padding-top: none;
+    padding-top: none;
 }
 
 .branding {
@@ -146,7 +144,6 @@ select:focus {
     position: relative;
     display: flex;
     gap: 10px;
-   
 }
 
 .logo {
@@ -156,7 +153,7 @@ select:focus {
 .logoText {
     width: 100%;
     top: 50%;
-    transform: translateY(47%); 
+    transform: translateY(47%);
     font-size: 50px;
     font-family: "Lexend Deca", sans-serif;
     font-weight: 600;
@@ -167,9 +164,9 @@ select:focus {
     right: 90px;
     top: -29px;
     display: flex;
-    position: relative; 
+    position: relative;
     gap: 46px;
-    text-align: right; 
+    text-align: right;
 }
 
 .contactUsText {
@@ -186,7 +183,6 @@ select:focus {
     font-weight: 500;
     cursor: pointer;
 }
-
 
 .newCourse {
     background-color: #0cb97a;
@@ -266,11 +262,11 @@ select:focus {
     color: #919191;
     text-align: center;
     text-decoration: none;
-    display: inline-block; 
+    display: inline-block;
     font-size: 30px;
     height: 1px;
     width: 0%;
-     transform: translate(10px, 8px);
+    transform: translate(10px, 8px);
 }
 
 .deleteCourse {
@@ -279,7 +275,7 @@ select:focus {
     color: #919191;
     text-align: center;
     text-decoration: none;
-    display: inline-block; 
+    display: inline-block;
     font-size: 30px;
     height: 1px;
     width: 0%;
@@ -291,7 +287,7 @@ select:focus {
 }
 
 .deleteSemester:hover {
-     color: #e00000;
+    color: #e00000;
 }
 
 .titleandHelp {
@@ -379,13 +375,12 @@ table {
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .infoModal {
@@ -471,7 +466,6 @@ a {
     font-size: 20px;
 }
 
-
 .contactModal {
     width: 100%;
     height: 100%;
@@ -501,7 +495,6 @@ a {
     align-items: center;
 }
 
-
 .contactModalTextElements {
     height: 3.24rem;
     width: 550px;
@@ -514,9 +507,8 @@ a {
     color: black;
 }
 
-
 .contactModalSelectElements {
-   height: 3.24rem;
+    height: 3.24rem;
     width: 564px;
     padding-left: 10px;
     text-decoration: none;
@@ -537,12 +529,10 @@ a {
     margin-bottom: 0px;
     background-color: white;
     color: black;
-    
 }
 
-
 #openHelpMenuFromContact {
-  cursor: pointer;    
+    cursor: pointer;
 }
 
 #sendEmailButton {
@@ -564,17 +554,15 @@ a {
 }
 
 .hintContactText {
-   color: black; 
- font-size: 18px;
+    color: black;
+    font-size: 18px;
 }
-    
 
 .statusText {
-    text-align: center; 
+    text-align: center;
     font-size: 17px;
     line-height: 1em;
 }
-
 
 .cookiesModal {
     width: 100%;
@@ -586,7 +574,7 @@ a {
     justify-content: center;
     align-items: center;
     display: none;
-      z-index: 1000;
+    z-index: 1000;
 }
 
 .cookiesModalContent {
@@ -600,22 +588,21 @@ a {
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 
 #cookieText {
     line-height: 1.5em;
 }
 
 #cookieInfoLink {
-    line-height: 0em; 
+    line-height: 0em;
 }
 
 #cookieTitle {
-     line-height: 0.2em;
+    line-height: 0.2em;
 }
 
 #cookieAcceptButton {
@@ -629,13 +616,36 @@ a {
     font-size: 20px;
     border-radius: 8px;
     height: 3rem;
-    width: 187px; 
+    width: 187px;
 }
 
-#acceptCookiesLink {
-     cursor: pointer;
+#acceptCookiesButton {
+    cursor: pointer;
+    background-color: #0cb97a;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    border-radius: 8px;
+    height: 3.5rem;
+    width: 100%;
+     margin-bottom: 14px;
 }
 
-#denyCookiesLink {
-     cursor: pointer;
+#denyCookiesButton {
+   cursor: pointer;
+    background-color:#e00000;;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    border-radius: 8px;
+    height: 3.5rem;
+    width: 100%;
 }
