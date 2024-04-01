@@ -60,6 +60,7 @@ window.onclick = (event) => {
     var infoModal = document.querySelector(".infoModal");
     var resultsModal = document.querySelector(".resultsModal");
     var contactModal = document.querySelector(".contactModal");
+    var cookiesModal = document.querySelector(".cookiesModal");
 
     if (
         event.target.matches(".infoModal") &&
@@ -97,6 +98,14 @@ window.onclick = (event) => {
         !event.target.matches(".contactText")
     ) {
         document.querySelector(".contactModal").style.display = "none";
+        lockScrolling("unlock");
+    }
+    //-----------------------------------------------
+    if (
+        event.target.matches(".cookiesModal") &&
+        getComputedStyle(cookiesModal).display === "flex"
+    ) {
+        document.querySelector(".cookiesModal").style.display = "none";
         lockScrolling("unlock");
     }
 };
@@ -153,7 +162,12 @@ function autoPopulateFieldFromSave(
         courseTypeInput.value = storageCourseTypesArray[i];
         i++;
     });
-
+    i = 0;
+    var semesterLabelInputs = document.querySelectorAll(".semesterLabel");
+    semesterLabelInputs.forEach(function (semesterLabelInput) {
+        semesterLabelInput.value = storageSemesterNamesArray[i];
+        i++;
+    });
     saveTimerStatus = "unlocked";
 }
 //------------------------------------------------------------------------------------------------------------------------------
@@ -356,6 +370,7 @@ function removeCourseField(semesterIndex, courseIndex) {
 }
 //--------------------------------------------------------------------------------------------------------------------
 function removeSemesterField(semesterIndex) {
+    //remove a semester
     if (semesterCounter > 1) {
         var deleteSemesterElement = document.getElementById(
             "semesterContainer_s" + semesterIndex
@@ -374,7 +389,7 @@ function removeSemesterField(semesterIndex) {
                     id="addSemesterButton"
                     class="newSemester"
                     type="button"
-                    onclick="addSemesterField()">
+                    onclick="addSemesterField(startingCoursesPerSem)">
                     +Semester
                 </button>
 
@@ -394,6 +409,7 @@ function removeSemesterField(semesterIndex) {
 }
 //--------------------------------------------------------------------------------------------------------------------
 function changeCourseCredentials(semesterIndex, courseIndex) {
+    //switch the ids & info for following semesters
     for (var j = courseIndex; j <= courseCounters[semesterIndex] + 1; j++) {
         var deleteCourseButton = document.getElementById(
             "deleteButton_s" + semesterIndex + "_c" + (j + 1)
@@ -446,11 +462,17 @@ function changeCourseCredentials(semesterIndex, courseIndex) {
         var courseNumber = document.getElementById(
             "course-number_s" + semesterIndex + "_c" + (j + 1)
         );
+
         courseNumber.setAttribute(
             "id",
             "course-number_s" + semesterIndex + "_c" + j
         );
-        courseNumber.textContent = j;
+
+        if (j < 10) {
+            courseNumber.textContent = "0" + j;
+        } else {
+            courseNumber.textContent = j;
+        }
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -490,7 +512,8 @@ function changeSemesterCredentials(semesterIndex) {
             );
         }
         //--------------------------------------------------
-        var semesterLabel = document.getElementById("semName" + (i + 1));
+        var semesterLabel = document.getElementById(
+            "semName" + (i + 1));
         if (semesterLabel) {
             semesterLabel.setAttribute("id", "semName" + i);
             if (semesterLabel != "Semester" + (i + 1)) {
@@ -499,64 +522,86 @@ function changeSemesterCredentials(semesterIndex) {
             }
         }
         //--------------------------------------------------
-
-        var semesterContainer = document.getElementById(
-            "semesterContainer_s" + (i + 1)
+         var semesterContainer = document.getElementById(
+            "semesterContainer_s" + (i+1)
         );
         if (semesterContainer) {
             semesterContainer.setAttribute("id", "semesterContainer_s" + i);
         }
         //--------------------------------------------------
-
         for (var j = 1; j <= courseCounters[i]; j++) {
-            //--------------------------------------------------
             var deleteCourseButton = document.getElementById(
                 "deleteButton_s" + (i + 1) + "_c" + j
             );
-            deleteCourseButton.setAttribute(
-                "onclick",
-                "removeCourseField(" + i + "," + j + ")"
-            );
-            deleteCourseButton.setAttribute(
-                "id",
-                "deleteButton_s" + i + "_c" + j
-            );
+            if (deleteCourseButton) {
+                deleteCourseButton.setAttribute(
+                    "onclick",
+                    "removeCourseField(" + i + "," + j + ")"
+                );
+                deleteCourseButton.setAttribute(
+                    "id",
+                    "deleteButton_s" + i + "_c" + j
+                );
+            }
             //--------------------------------------------------
             var courseNameInput = document.getElementById(
                 "course-name_s" + (i + 1) + "_c" + j
             );
-
-            courseNameInput.setAttribute(
-                "oninput",
-                "courseInputChanged(" + i + "," + j + ")"
-            );
-            courseNameInput.setAttribute("id", "course-name_s" + i + "_c" + j);
-
+            if (courseNameInput) {
+                courseNameInput.setAttribute(
+                    "oninput",
+                    "courseInputChanged(" + i + "," + j + ")"
+                );
+                courseNameInput.setAttribute(
+                    "id",
+                    "course-name_s" + i + "_c" + j
+                );
+            }
             //--------------------------------------------------
             var courseGradeSelect = document.getElementById(
                 "course-grade_s" + (i + 1) + "_c" + j
             );
-
-            courseGradeSelect.setAttribute(
-                "id",
-                "course-grade_s" + i + "_c" + j
-            );
+            if (courseGradeSelect) {
+                courseGradeSelect.setAttribute(
+                    "id",
+                    "course-grade_s" + i + "_c" + j
+                );
+            }
             //--------------------------------------------------
             var courseTypeSelect = document.getElementById(
                 "class-type_s" + (i + 1) + "_c" + j
             );
-
-            courseTypeSelect.setAttribute("id", "class-type_s" + i + "_c" + j);
+            if (courseTypeSelect) {
+                courseTypeSelect.setAttribute(
+                    "id",
+                    "class-type_s" + i + "_c" + j
+                );
+            }
             //--------------------------------------------------
             var courseContainer = document.getElementById(
                 "course-container_s" + (i + 1) + "_c" + j
             );
-
-            courseContainer.setAttribute(
-                "id",
-                "course-container_s" + i + "_c" + j
-            );
+            if (courseContainer) {
+                courseContainer.setAttribute(
+                    "id",
+                    "course-container_s" + i + "_c" + j
+                );
+            }
             //--------------------------------------------------
+            var courseNumber = document.getElementById(
+                "course-number_s" + (i + 1) + "_c" + j
+            );
+            if (courseNumber) {
+                courseNumber.setAttribute(
+                    "id",
+                    "course-number_s" + i + "_c" + j
+                );
+                if (j < 10) {
+                    courseNumber.textContent = "0" + j;
+                } else {
+                    courseNumber.textContent = j;
+                }
+            }
         }
     }
 }
@@ -599,7 +644,7 @@ function addCourseField(semesterIndex) {
                                 <div id="course-number_s${semesterIndex}_c${courseCounters[semesterIndex]}"
                                 class = "courseNumberMarker noselect">${courseCounters[semesterIndex]} </div>
                             
-                                <input type="text" id="course-name_s${semesterIndex}_c${courseCounters[semesterIndex]}" class="courseInput" placeholder="Course Name" oninput= "courseInputChanged(${semesterIndex}, ${courseCounters[semesterIndex]})">
+                                <input type="text" id="course-name_s${semesterIndex}_c${courseCounters[semesterIndex]}" class="courseInput" maxlength="50" placeholder="Course Name" oninput= "courseInputChanged(${semesterIndex}, ${courseCounters[semesterIndex]})">
                                 <div class="classGrade noselect">
                                     <select onclick = "saveTimer()" id="course-grade_s${semesterIndex}_c${courseCounters[semesterIndex]}">
                                         <option value=4.0>A+</option>
@@ -641,6 +686,16 @@ function addCourseField(semesterIndex) {
         document
             .getElementById(`additionalFields_s${semesterIndex}`)
             .appendChild(courseContainer);
+
+        if (courseCounters[semesterIndex] < 10) {
+            var courseNumber = document.getElementById(
+                "course-number_s" +
+                    semesterIndex +
+                    "_c" +
+                    courseCounters[semesterIndex]
+            );
+            courseNumber.textContent = "0" + courseCounters[semesterIndex];
+        }
 
         saveTimer();
     }
@@ -711,7 +766,7 @@ function addSemesterField(courseCount) {
                                 id="addSemesterButton"
                                 class="newSemester noselect"
                                 type="button"
-                                onclick="addSemesterField()">
+                                onclick="addSemesterField(startingCoursesPerSem)">
                                 +Semester
                             </button>
                             <button
@@ -724,6 +779,12 @@ function addSemesterField(courseCount) {
                         </div>
                         `;
         document.getElementById("courseForm").appendChild(semesterContainer);
+
+        if (courseCount != "") {
+            for (let i = 1; i <= courseCount; i++) {
+                addCourseField(semesterCounter);
+            }
+        }
         saveTimer();
     }
 }
@@ -1045,19 +1106,24 @@ function cookiesAcceptClick() {
 }
 //--------------------------------------------------------------------------------------------------------------------
 function openCookiesPage() {
-    document.querySelector(".infoModal").style.display = "none";
-    const infoQuestions = document.querySelectorAll(".infoQuestion");
-    infoQuestions.forEach(function (infoQuestion) {
-        infoQuestion.classList.remove("open"); //automatically close all opened questions.
-        infoQuestion.addEventListener("click", function () {
-            //re-add the event listener
-            infoQuestion.classList.toggle("open");
+    var infoModal = document.querySelector(".infoModal");
+
+    if (getComputedStyle(infoModal).display === "flex") {
+        document.querySelector(".infoModal").style.display = "none";
+        const infoQuestions = document.querySelectorAll(".infoQuestion");
+        infoQuestions.forEach(function (infoQuestion) {
+            infoQuestion.classList.remove("open"); //automatically close all opened questions.
+            infoQuestion.addEventListener("click", function () {
+                //re-add the event listener
+                infoQuestion.classList.toggle("open");
+            });
         });
-    });
+    }
+
     lockScrolling("lock");
     document.querySelector(".cookiesModal").style.display = "flex";
 }
-
+//--------------------------------------------------------------------------------------------------------------------
 function denyCookiesClick() {
     document.cookie =
         "firstVisitStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
