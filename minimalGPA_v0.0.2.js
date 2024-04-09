@@ -1,21 +1,21 @@
-var semesterCounter = 0;
-var courseCounters = { 0: 1 };
+var semesterCounter = 0; // current numb of semesters
+var courseCounters = { 0: 1 }; //course count per sem using key val pairs
 var semesterLimit = 10;
 var courseLimit = 20;
-var startingCoursesPerSem = 4;
+var startingCoursesPerSem = 4; // initial amount to create with new semester
 var saveTimerStatus = "locked";
 var cookiesAllowed = false;
 
 var statusText = document.querySelector(".statusText");
-let timeout;
+let timeout; //for save timer
 
 window.addEventListener("load", function () {
     //when the screen initializes add a semester or extract saved data
     let cookieInformation = document.cookie;
-    if (cookieInformation == "") {
+    if (cookieInformation == "") { //determine existance of cookie
         console.log("Cookie not found");
-        openCookiesPage();
-        addSemesterField();
+        openCookiesPage(); //ask for cookies func
+        addSemesterField(); //create stock screen
 
         for (let i = 1; i <= startingCoursesPerSem; i++) {
             addCourseField(1);
@@ -23,7 +23,7 @@ window.addEventListener("load", function () {
         saveTimerStatus = "unlocked";
     } else {
         console.log("Cookie found");
-        extractSavedData();
+        extractSavedData(); //pull data from local storage
     }
 });
 //--------------------------------------------------------------------------------------------------------------------
@@ -57,6 +57,7 @@ document //establish x button functionality for cookie page
     });
 //--------------------------------------------------------------------------------------------------------------------
 window.onclick = (event) => {
+    //allow the user to click out of modals by clicked the gray surrounding area
     var infoModal = document.querySelector(".infoModal");
     var resultsModal = document.querySelector(".resultsModal");
     var contactModal = document.querySelector(".contactModal");
@@ -125,6 +126,7 @@ document //redirect user from contact screen to help screen
     });
 //------------------------------------------------------------------------------------------------------------------------------
 function autoPopulateFieldFromSave(
+    //grab data from local storage and fill in on the screen
     storageCourseNamesArray,
     storageCourseTypesArray,
     storageCourseGradesArray,
@@ -163,15 +165,16 @@ function autoPopulateFieldFromSave(
         i++;
     });
     i = 0;
-    var semesterLabelInputs = document.querySelectorAll(".semesterLabel");
+    var semesterLabelInputs = document.querySelectorAll(".semesterLabel"); //fill semester names
     semesterLabelInputs.forEach(function (semesterLabelInput) {
         semesterLabelInput.value = storageSemesterNamesArray[i];
         i++;
     });
-    saveTimerStatus = "unlocked";
+    saveTimerStatus = "unlocked"; // allow the script to begin saving new data 
 }
 //------------------------------------------------------------------------------------------------------------------------------
 function extractSavedData() {
+    //pull data from local storage
     var now = new Date();
     console.log("------------------------------------------------");
     console.log("Extracting Data");
@@ -196,7 +199,7 @@ function extractSavedData() {
         let storageSemesterCounter = 0;
         let storageCourseCounters = {};
 
-        cursorRequest.onsuccess = function (event) {
+        cursorRequest.onsuccess = function (event) { //with successful grab, set arrays
             const cursor = event.target.result;
             if (cursor) {
                 const data = cursor.value;
@@ -236,6 +239,7 @@ function extractSavedData() {
 }
 //------------------------------------------------------------------------------------------------------------------------------
 function save() {
+    //save function after save timer executes
     var courseNamesArray = [];
     var courseGradesArray = [];
     var courseLetterGradesArray = [];
@@ -244,7 +248,7 @@ function save() {
 
     var courseNameInputs = document.querySelectorAll(".courseInput"); //add all course names to the array
 
-    courseNameInputs.forEach(function (courseNameInput) {
+    courseNameInputs.forEach(function (courseNameInput) { //add data to arrays
         courseNamesArray.push(courseNameInput.value);
     });
     //------------------------------------------------------------------------------------------------------------------
@@ -282,7 +286,7 @@ function save() {
     console.log("Saving in progress");
     console.log(now);
 
-    const request = indexedDB.open("GPA_DB", 1);
+    const request = indexedDB.open("GPA_DB", 1); //create local store
 
     request.onupgradeneeded = function (event) {
         const db = event.target.result;
@@ -292,7 +296,7 @@ function save() {
             autoIncrement: true
         });
 
-        //Indexes
+        //indexes
         objectStore.createIndex("courseNames", "courseNames", {
             unique: false
         });
@@ -312,7 +316,7 @@ function save() {
             unique: false
         });
     };
-
+//store the data and delete old data
     request.onsuccess = function (event) {
         const db = event.target.result;
         const transaction = db.transaction(["gpaData"], "readwrite");
@@ -343,7 +347,7 @@ function save() {
             console.error("Failed to add data.");
         };
     };
-    statusText.textContent = "✓ Saved";
+    statusText.textContent = "✓ Saved"; //update text
 }
 //--------------------------------------------------------------------------------------------------------------------
 function saveTimer() {
@@ -351,7 +355,7 @@ function saveTimer() {
     if (saveTimerStatus == "unlocked") {
         statusText.textContent = "⟳ Saving...";
         clearTimeout(timeout);
-        timeout = setTimeout(save, 1000);
+        timeout = setTimeout(save, 1000); //if user is inactive for 1 second after change, run save func
     } else {
         console.log("Save Blocked while populating");
     }
@@ -365,7 +369,7 @@ function removeCourseField(semesterIndex, courseIndex) {
         deleteCourseElement.remove();
         courseCounters[semesterIndex]--;
         saveTimer();
-        changeCourseCredentials(semesterIndex, courseIndex); //change the courses names n stuff
+        changeCourseCredentials(semesterIndex, courseIndex); //change the courses ids and values
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -375,16 +379,16 @@ function removeSemesterField(semesterIndex) {
         var deleteSemesterElement = document.getElementById(
             "semesterContainer_s" + semesterIndex
         );
-        deleteSemesterElement.remove();
-        semesterCounter--;
-        changeSemesterCredentials(semesterIndex);
-        delete courseCounters[semesterCounter + 1];
+        deleteSemesterElement.remove(); //remove
+        semesterCounter--; //decrease sem count
+        changeSemesterCredentials(semesterIndex); //change semester ids and values
+        delete courseCounters[semesterCounter + 1]; //delete course counter pair for semester
 
-        // Check if the buttons already exist before appending
+        // Check if the buttons already exist before appending new buttons
         if (!document.getElementById("addSemesterButton")) {
             var bottomButtons = document.createElement("div");
-            bottomButtons.classList.add("bottomButtons");
-            bottomButtons.innerHTML = `
+            bottomButtons.classList.add("bottomButtons"); //add new bottom buttons
+            bottomButtons.innerHTML = ` 
                 <button
                     id="addSemesterButton"
                     class="newSemester"
@@ -404,7 +408,7 @@ function removeSemesterField(semesterIndex) {
 
             document.getElementById("courseForm").appendChild(bottomButtons);
         }
-        saveTimer();
+        saveTimer(); //run save timer
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -622,19 +626,20 @@ function checkInputs() {
     if (statusBool == true) {
         return { status: "valid request" };
     } else {
-        return { status: "invalid request" };
+        return { status: "invalid request" }; //return status to calculate
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
 function addCourseField(semesterIndex) {
-    if (courseCounters[semesterIndex] < courseLimit) {
+    //add new courses
+    if (courseCounters[semesterIndex] < courseLimit) { //ensure course count is not above the max
         if (!courseCounters[semesterIndex]) {
             courseCounters[semesterIndex] = 1;
         } else {
             courseCounters[semesterIndex]++;
         }
 
-        var courseContainer = document.createElement("div");
+        var courseContainer = document.createElement("div"); //create inner html
         courseContainer.classList.add(
             `course-container_s${semesterIndex}_c${courseCounters[semesterIndex]}`
         );
@@ -685,9 +690,9 @@ function addCourseField(semesterIndex) {
 
         document
             .getElementById(`additionalFields_s${semesterIndex}`)
-            .appendChild(courseContainer);
+            .appendChild(courseContainer); //append
 
-        if (courseCounters[semesterIndex] < 10) {
+        if (courseCounters[semesterIndex] < 10) { //add an extra "0" to courses under 10 for formatting purposes
             var courseNumber = document.getElementById(
                 "course-number_s" +
                     semesterIndex +
@@ -697,12 +702,13 @@ function addCourseField(semesterIndex) {
             courseNumber.textContent = "0" + courseCounters[semesterIndex];
         }
 
-        saveTimer();
+        saveTimer(); // run save timer
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
 function addSemesterField(courseCount) {
-    if (semesterCounter < semesterLimit) {
+    //add semester to field
+    if (semesterCounter < semesterLimit) { //ensure semester counter is not above max
         semesterCounter++;
 
         if (!courseCounters[semesterCounter]) {
@@ -722,12 +728,12 @@ function addSemesterField(courseCount) {
         var semesterContainer = document.createElement("div");
         var semesterId = `semesterContainer_s${semesterCounter}`;
         semesterContainer.id = semesterId;
-        semesterContainer.classList.add("semesterContainer");
+        semesterContainer.classList.add("semesterContainer"); //create inner html
         semesterContainer.innerHTML = `
 
                             <div class="semesterLabelElements">
 
-                            <input class="semesterLabel" type="text" id="semName${semesterCounter}" oninput = "saveTimer()" value="Semester ${semesterCounter}">
+                            <input class="semesterLabel" type="text" id="semName${semesterCounter}" oninput = "saveTimer()" value="Semester ${semesterCounter}" maxlength="50">
 
 
                              <button
@@ -780,12 +786,12 @@ function addSemesterField(courseCount) {
                         `;
         document.getElementById("courseForm").appendChild(semesterContainer);
 
-        if (courseCount != "") {
+        if (courseCount != "") { //add courses if this is not an autopopulate call
             for (let i = 1; i <= courseCount; i++) {
                 addCourseField(semesterCounter);
             }
         }
-        saveTimer();
+        saveTimer(); // run save timer
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
@@ -956,7 +962,7 @@ function calculateGPA(event) {
             .getElementById("resultsModal")
             .appendChild(resultsModalContent);
 
-        var semesterTableHTML =
+        var semesterTableHTML = //update tables
             "<table> <th>Semester</th> <th>W GPA</th> <th>UW GPA</th>";
 
         for (var p = 0; p < semesterNamesArray.length; p++) {
@@ -964,7 +970,7 @@ function calculateGPA(event) {
                 semesterNamesArray[p]
             }</td> <td>${semesterWeightedArray[p].toFixed(
                 2
-            )}</td>  <td>${semesterUnweightedArray[p].toFixed(2)}</td></tr>`;
+            )}</td>  <td>${semesterUnweightedArray[p].toFixed(2)}</td></tr>`; 
         }
 
         semesterTableHTML += "</table>";
@@ -1007,7 +1013,7 @@ function calculateGPA(event) {
             );
         }
 
-        const ctx = document.getElementById("cumulativeGPAChart");
+        const ctx = document.getElementById("cumulativeGPAChart"); //create data graph
         new Chart(ctx, {
             type: "line",
             data: {
@@ -1040,7 +1046,7 @@ function calculateGPA(event) {
 
     //-----------------------------------------------------------------------------------------------------------------
     document
-        .getElementById("closeResultModal")
+        .getElementById("closeResultModal") //establish x button functionality for results modal
         .addEventListener("click", function () {
             document.querySelector(".resultsModal").style.display = "none";
             var deleteOldModalContent = document.getElementById(
@@ -1054,7 +1060,7 @@ function calculateGPA(event) {
 function courseInputChanged(semesterIndex, courseIndex) {
     // semesterIndex, courseIndex
 
-    saveTimer();
+    saveTimer(); //run on course input type
 
     var currentCourseInput = document.getElementById(
         "course-name_s" + semesterIndex + "_c" + courseIndex
@@ -1067,21 +1073,18 @@ function courseInputChanged(semesterIndex, courseIndex) {
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
-function lockScrolling(lockStatus) {
+function lockScrolling(lockStatus) {  //scroll and lock users screen during modal view
     if (lockStatus == "lock") {
-        window.scrollTo(15, 0); //move user up
-        document.querySelector("body").style.overflow = "hidden"; //stop scrolling
+        window.scrollTo(0, 0); //move user up
+        document.querySelector("body").style.overflowY = "hidden"; //stop scrolling
         document.querySelector("body").style.height = "100%";
-        document.querySelector("body").style.width = "100%";
     } else if (lockStatus == "unlock") {
         document.querySelector("body").style.overflowY = "auto"; //allow scrolling
-        document.querySelector("body").style.overflowX = "hidden"; //allow scrolling
         document.querySelector("body").style.height = "auto";
-        document.querySelector("body").style.width = "100%";
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
-function infoButtonClick() {
+function infoButtonClick() { //establish help button functionality
     const infoQuestions = document.querySelectorAll(".infoQuestion");
     infoQuestions.forEach(function (infoQuestion) {
         infoQuestion.addEventListener("click", function () {
@@ -1092,23 +1095,25 @@ function infoButtonClick() {
     lockScrolling("lock");
 }
 //--------------------------------------------------------------------------------------------------------------------
-function contactButtonClick() {
+function contactButtonClick() { //establish contact button functionality
     const contactModal = document.querySelector(".contactModal");
     contactModal.style.display = "flex";
     lockScrolling("lock");
 }
 //--------------------------------------------------------------------------------------------------------------------
-function cookiesAcceptClick() {
+function cookiesAcceptClick() { //create cookies
     cookiesAllowed = true;
+    var now = new Date();
+    now.setMonth( now.getMonth() + 12);
     document.cookie = "firstVisitStatus=true";
+    document.cookie = "expires=" + now.toUTCString() + ";";
     document.querySelector(".cookiesModal").style.display = "none";
     lockScrolling("unlock");
 }
 //--------------------------------------------------------------------------------------------------------------------
-function openCookiesPage() {
+function openCookiesPage() { //open cookies page
     var infoModal = document.querySelector(".infoModal");
-
-    if (getComputedStyle(infoModal).display === "flex") {
+    if (getComputedStyle(infoModal).display === "flex") { //cookies page from info page -> close info page
         document.querySelector(".infoModal").style.display = "none";
         const infoQuestions = document.querySelectorAll(".infoQuestion");
         infoQuestions.forEach(function (infoQuestion) {
@@ -1124,7 +1129,7 @@ function openCookiesPage() {
     document.querySelector(".cookiesModal").style.display = "flex";
 }
 //--------------------------------------------------------------------------------------------------------------------
-function denyCookiesClick() {
+function denyCookiesClick() { //delete existing cookies by backdating expiration 
     document.cookie =
         "firstVisitStatus=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
     alert("Cookies deleted successfully");
