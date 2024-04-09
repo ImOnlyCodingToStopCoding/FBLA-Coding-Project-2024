@@ -4,9 +4,10 @@
 
 body {
     height: auto;
-    width: 75%;
+    max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    margin: 0px;
 }
 
 h1 {
@@ -29,7 +30,7 @@ h4 {
     font-size: 17px;
 }
 .courseInput {
-    height: 2.7rem;
+    height: 2.6rem;
     width: 7rem;
     padding-left: 10px;
     text-decoration: none;
@@ -40,9 +41,9 @@ h4 {
     border-left: 1px solid #b6b6b6;
     border-right: 1px solid #b6b6b6;
     font-size: 17px;
+    border-top-right-radius: 0rem;
+    border-bottom-right-radius: 0rem;
     margin-bottom: 0px;
-    transform: translateX(20px);
-    transform: translateY(-9px);
     background-color: white;
     color: black;
     z-index: 0;
@@ -65,13 +66,14 @@ label {
     font-weight: bold;
     width: 225px;
     height: 3.1rem;
+    border-radius: 0px;
     border: 1px solid #b6b6b6;
     background-color: white;
     z-index: 0;
 }
 
 .semesterLabelElements {
-    gap: 1%;
+    width: 100%;
     display: flex;
     justify-content: center;
     transform: translateX(3%);
@@ -85,9 +87,8 @@ label {
     padding-left: 2px;
     border-left: none;
     border-right: none;
+    border-radius: 0px;
     font-size: 15px;
-    transform: translateX(20px);
-    transform: translateY(-9px);
     color: black;
     background-color: white;
     z-index: 0;
@@ -97,6 +98,7 @@ label {
     height: 3.25rem;
     width: 120px;
     padding: 16px 10px;
+    
     border-top: 1px solid #b6b6b6;
     border-top-right-radius: 0.25rem;
     border-bottom: 1px solid #b6b6b6;
@@ -104,8 +106,6 @@ label {
     border-right: 1px solid #b6b6b6;
     border-left: 1px solid #b6b6b6;
     font-size: 15px;
-    transform: translateX(20px);
-    transform: translateY(-9px);
     color: black;
     background-color: white;
      z-index: 0;
@@ -113,9 +113,9 @@ label {
 
 .courseNumberMarker {
     font-size: 17px;
-    transform: translate(-8px, 8px);
+    transform: translate(-8px,19px);
     color: gray;
-     z-index: 0;
+    z-index: 0;
 }
 
 select:focus {
@@ -125,7 +125,9 @@ select:focus {
 .courseContainer {
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .courseLabel {
@@ -136,10 +138,10 @@ select:focus {
 
 .header {
     position: relative;
-    width: 100%;
+    width: 90%;
+    padding-left: 5%;
+     padding-right: 5%;
     line-height: 0.1em;
-    padding-left: 30px;
-    padding-right: 30px;
     padding-bottom: none;
     padding-top: none;
 }
@@ -159,10 +161,10 @@ select:focus {
 
 .logoText {
     display: inline-block;
-    width: 75%;
+    width: 100%;
     top: 50%;
     transform: translateY(30px);
-    font-size: 40px;
+    font-size: 42px;
     font-family: "Lexend Deca", sans-serif;
     font-weight: 600;
 }
@@ -230,7 +232,7 @@ select:focus {
     font-size: 20px;
     border-radius: 8px;
     height: 4rem;
-    width: 175px;
+    width: 170px;
 }
 
 .newSemester:hover {
@@ -248,7 +250,7 @@ select:focus {
     font-size: 20px;
     border-radius: 8px;
     height: 4rem;
-    width: 175px;
+    width: 170px;
 }
 
 #calculateGPAButton:hover {
@@ -256,17 +258,18 @@ select:focus {
 }
 
 .bottomButtons {
+    width: 100%;
     display: flex;
     gap: 10px;
     justify-content: center;
 }
-
+/*
 #calculateElements {
     display: flex;
     gap: 10px;
     justify-content: center;
 }
-
+*/
 .deleteSemester {
     background-color: rgba(255, 0, 0, 0);
     border: none;
@@ -277,7 +280,7 @@ select:focus {
     font-size: 22px;
     height: 1px;
     width: 5%;
-    transform: translate(-11px, 13px);
+    transform: translate(-10px, 10px);
 }
 
 .deleteCourse {
@@ -290,7 +293,7 @@ select:focus {
     font-size: 22px;
     height: 1px;
     width: 0%;
-    transform: translate(-11px, 7px);
+    transform: translate(-10px, 10px);
     z-index: 0;
 }
 
@@ -405,7 +408,7 @@ table {
 
 .infoModalContent {
     z-index: 1000;
-    width: 100%;
+    width: 60%;
     height: 80%;
     background-color: #ffffff;
     line-height: 2em;
@@ -424,7 +427,7 @@ table {
 }
 
 .infoModalContent ul {
-    width: 100%;
+    width: 90%;
     margin: 3rem auto;
     padding: 0;
     list-style-type: none;
@@ -503,13 +506,13 @@ a {
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none; 
+                                 
 }
 
 .statusText {
