@@ -4,9 +4,15 @@
 
 body {
     height: auto;
-    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    scroll-behavior: smooth;
+    margin: 0px;
+}
+
+.courseForm {
+    width:100%
 }
 
 h1 {
@@ -274,6 +280,7 @@ select:focus {
     height: 1px;
     width: 5%;
     transform: translateY(380%);
+    z-index: 0;
 }
 
 .deleteCourse {
@@ -541,6 +548,74 @@ a {
     align-items: center;
 }
 
+
+.contactModalTextElements {
+    height: 3.24rem;
+    width: 95%;
+    padding-left: 10px;
+    text-decoration: none;
+    border: 1px solid #b6b6b6;
+    font-size: 22px;
+    margin-bottom: 0px;
+    background-color: white;
+    color: black;
+}
+
+.contactModalSelectElements {
+    height: 3.24rem;
+    width: 95%;
+    padding-left: 10px;
+    text-decoration: none;
+    border: 1px solid #b6b6b6;
+    font-size: 22px;
+    margin-bottom: 0px;
+    background-color: white;
+    color: black;
+}
+
+#contactModalMessage {
+    width: 95%;
+    height: 10%;
+    padding-left: 10px;
+    text-decoration: none;
+    border: 1px solid #b6b6b6; 
+    font-size: 22px;
+    margin-bottom: 0px; 
+    background-color: white;
+    color: black; 
+    resize: none; 
+}
+
+#openHelpMenuFromContact {
+    cursor: pointer;
+}
+
+#sendEmailButton {
+    background-color: #dc6512;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block; 
+    font-size: 23px;
+    border-radius: 8px;
+    height: 3.8rem;
+    width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #cookieText {
     line-height: 1.5em;
 }
@@ -597,4 +672,16 @@ a {
     border-radius: 8px;
     height: 3.5rem;
     width: 100%;
+}
+
+#acceptCookiesButton:hover {
+   background-color: #0a8759;   
+}
+
+#denyCookiesButton:hover {
+background-color: rgb(184, 0, 0);
+}
+
+#helpButtonMobile {
+display: none;
 }
