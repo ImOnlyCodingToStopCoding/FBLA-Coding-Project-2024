@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link
             rel="stylesheet"
-            media="screen and (min-width: 555px) and (max-width: 680px)"
+            media="screen and (min-width: 556px) and (max-width: 680px)"
             href="minimalGPAComputer(Minimized)_v0.0.2.css" />
         <link
             rel="stylesheet"
@@ -16,7 +16,7 @@
             href="minimalGPAComputer_v0.0.2.css" />
         <link
             rel="stylesheet"
-            media="screen and (max-width: 554px)"
+            media="screen and (max-width: 555px)"
             href="minimalGPAMobile_v0.0.2.css" />
     </head>
 
@@ -180,6 +180,15 @@
                                         and deletion requests. We apologize if
                                         this causes difficulty.
                                     </li>
+                                    
+                                     <br />
+
+                                    <li>
+                                       My data is not showing up properly?
+                                        <br />
+
+                                        Try to delete cookies by pressing the "deny cookies" button at the bottom of this page, or contact us through our form.
+                                    </li>
                                 </ol>
                             </span>
                         </div>
@@ -193,6 +202,21 @@
                         <div class="infoAnswer">
                             <span>
                                 Version History:
+                                <br />
+                                <br />
+                                v0.0.6 (4/8/2024)
+                                <br />
+                                -fixed contact form formatting and sending bugs
+                                <br />
+                                -added maxlengths to contact form 
+                                <br /> 
+                                -added maxlength to semester names
+                                <br />
+                                -added cookie expire date 
+                                <br />
+                                -fixed mobile cookies saving bug
+                                <br>
+                                -fixed formatting issues with modal screens
                                 <br />
                                 <br />
                                 v0.0.5 (3/31/24)
@@ -341,10 +365,12 @@
                         Deny Cookies
                     </button>
                 </ul>
-                <span id="currentVersionNumber"> Version 0.0.5 </span>
+                <span id="currentVersionNumber"> Version 0.0.6 </span>
             </div>
         </div>
-
+        
+        
+<form action="https://formsubmit.co/simplylochapps@gmail.com" method="POST">
         <div class="contactModal">
             <div class="contactModalContent">
                 <div id="closeContactModal" class="closeModal noselect">+</div>
@@ -354,54 +380,69 @@
                 <div id="openHelpMenuFromContact" class="noselect">
                     <h3><u> Check Out Our FAQ First </u></h3>
                 </div>
-                <hr />
+              
                 <select
-                    id="contactModaleSelect"
+                    name="_subject"
+                    id="contactModalSelect"
                     class="contactModalSelectElements"
                     placeholder="Please Select your Issue">
                     <option value="" disabled selected hidden>
                         Please Select a Topic
                     </option>
                     <option value="Software Bug">Software Bug</option>
-                    <option value="Software Bug">Other</option>
+                    <option value="Legal/Privacy">Legal/Privacy</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Feedback">Suggestion</option>
+                    <option value="Software Bug">General</option>
                 </select>
-                <hr />
+             <hr>
 
                 <span class="hintContactText noselect">Email</span>
                 <input
-                    type="text"
+                    type="email"
+                    name="email"
                     id="contactModalEmail"
                     class="contactModalTextElements"
-                    placeholder="email@example.com" />
+                    placeholder="email@example.com" 
+                    maxlength="50" required/>
                 <hr />
+                
                 <span class="hintContactText noselect">Name</span>
                 <input
                     type="text"
+                    name="name"
                     id="contactModalName"
                     class="contactModalTextElements"
-                    placeholder="john smith" />
+                    placeholder="john smith" 
+                    maxlength="50" required />
                 <hr />
 
                 <span class="hintContactText noselect">Message</span>
+                
                 <textarea
+                    type="text"
+                    name="text"
                     id="contactModalMessage"
                     placeholder="Your message..."
                     rows="4"
-                    cols="50"></textarea>
+                    cols="50"
+                    maxlength="400"
+                    required></textarea>
                 <hr />
-                <hr />
+              
                 <button
                     id="sendEmailButton"
                     class="sendEmailButton noselect"
-                    type="button"
-                    onclick="sendEmail()">
+                    type="submit">
                     Send Away
                 </button>
 
-                <h4>We will get back to you in 2-3 buisness days</h4>
+               
             </div>
         </div>
-
+        </form>
+        
+        
         <div class="cookiesModal" id="cookiesModal">
             <div class="cookiesModalContent">
                 <div id="closeCookiesModal" class="closeModal noselect">+</div>
@@ -422,7 +463,7 @@
             </div>
         </div>
 
-        <form id="courseForm"></form>
+        <form id="courseForm"></form>      
         <script src="minimalGPA_v0.0.2.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </body>
