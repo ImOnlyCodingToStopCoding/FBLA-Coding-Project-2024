@@ -4,9 +4,14 @@
 
 body {
     height: auto;
-    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    margin: 0px;
+}
+
+.courseForm {
+    width:100%
 }
 
 h1 {
@@ -497,7 +502,7 @@ a {
 
 .contactModalTextElements {
     height: 3.24rem;
-    width: 550px;
+    width: 95%;
     padding-left: 10px;
     text-decoration: none;
     border: 1px solid #b6b6b6;
@@ -509,7 +514,7 @@ a {
 
 .contactModalSelectElements {
     height: 3.24rem;
-    width: 564px;
+    width: 95%;
     padding-left: 10px;
     text-decoration: none;
     border: 1px solid #b6b6b6;
@@ -520,15 +525,16 @@ a {
 }
 
 #contactModalMessage {
-    height: 32.05rem;
-    width: 550px;
+    width: 95%;
+    height: 10%;
     padding-left: 10px;
     text-decoration: none;
-    border: 1px solid #b6b6b6;
+    border: 1px solid #b6b6b6; 
     font-size: 22px;
-    margin-bottom: 0px;
+    margin-bottom: 0px; 
     background-color: white;
-    color: black;
+    color: black; 
+    resize: none; 
 }
 
 #openHelpMenuFromContact {
@@ -539,14 +545,13 @@ a {
     background-color: #dc6512;
     border: none;
     color: white;
-    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: inline-block; 
     font-size: 23px;
     border-radius: 8px;
     height: 3.8rem;
-    width: 250px;
+    width: 50%;
 }
 
 #sendEmailButton:hover {
@@ -648,4 +653,17 @@ a {
     border-radius: 8px;
     height: 3.5rem;
     width: 100%;
+}
+
+
+#acceptCookiesButton:hover {
+   background-color: #0a8759;   
+}
+
+#denyCookiesButton:hover {
+background-color: rgb(184, 0, 0);
+}
+
+#helpButtonMobile {
+    display: none;
 }
