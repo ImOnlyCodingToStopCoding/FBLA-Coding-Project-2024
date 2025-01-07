@@ -1,5 +1,6 @@
 # FBLA Intro to Coding & Programming Event Submission 2024
 The most intuitive and easy-to-use web-based open-source GPA calculator. It is designed to help high school student calculate their grades and show useful data to help them improve.
+
 -IndexedDB and Cookies for Browser Storage 
 -Autosave Functionality 
 -Dynamic Course and Semester Addition
